@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { OAuth2Client } from "google-auth-library";
+import { getUserData } from "./auth-function/getUserData.js";
 
 dotenv.config();
 const app = express();
@@ -9,19 +10,7 @@ const PORT = process.env.PORT || 4500;
 app.use(cors());
 app.use(express.json());
 
-async function getUserData(access_token) {
-  try {
-    const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-      headers: {
-        Authorization: `Bearer${access_token}`,
-      },
-    });
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.log("Error fetching user info ", error);
-  }
-}
+
 
 app.post("/", async (req, res) => {
   try {
@@ -33,7 +22,7 @@ app.post("/", async (req, res) => {
     );
     const authorizeUrl = oAuth2Client.generateAuthUrl({
       access_type: "offline",
-      scope: "https://www.googleapis.com/auth/userinfo.profile openid",
+      scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email openid",
       promp: "consent",
     });
     res.status(200).json({ url: authorizeUrl });
