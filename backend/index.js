@@ -9,6 +9,7 @@ import { getUserData } from "./auth-function/getUserData.js";
 dotenv.config();
 const app = express();
 const prisma = new PrismaClient()
+const saltRounds = 10
 const PORT = process.env.PORT || 4500;
 app.use(cors());
 app.use(express.json());
@@ -70,7 +71,7 @@ app.post("/signup", async (req, res) => {
         .json({ message: "Email or username already exist" });
     }
     // hash user password for security reason
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password,saltRounds);
 
     // create the user/profile using nest creation
     const newUser = await prisma.user.create({
@@ -78,14 +79,6 @@ app.post("/signup", async (req, res) => {
         email,
         username,
         password: hashedPassword,
-        profile: {
-          create: {
-            bio: "",
-          },
-        },
-        include: {
-          profile: true,
-        },
       },
     });
     res
