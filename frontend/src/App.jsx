@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./App.css";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   const BASE_URL = "http://localhost:4500";
@@ -21,6 +24,11 @@ function App() {
       <button type="button" onClick={() => auth()}>
         Sign in
       </button>
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="signUp" element={<SignUp />} />
+        <Route />
+      </Routes>
     </>
   );
 }
