@@ -33,7 +33,3 @@ function App() {
 }
 
 export default App;
-// TODO: WORKING ON THIS LATER 
-// <button type="button" onClick={() => auth()}>
-//         Google Sign in
-//       </button>
