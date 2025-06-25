@@ -11,7 +11,7 @@ const app = express();
 const prisma = new PrismaClient();
 const saltRounds = 10;
 const PORT = process.env.PORT || 4500;
-const BASE_URL = "http://localhost:4500"
+const BASE_URL = "http://localhost:4500";
 app.use(cors());
 app.use(express.json());
 
@@ -40,7 +40,9 @@ app.post("/", async (req, res) => {
     });
     res.status(HttpStatus.CREATED).json({ url: authorizeUrl });
   } catch (error) {
-    res.status(HttpStatus.BAD_REQUEST).json({ message: "Error generating url" });
+    res
+      .status(HttpStatus.BAD_REQUEST)
+      .json({ message: "Error generating url" });
   }
 });
 
@@ -59,7 +61,9 @@ app.get("/auth/google/callback", async (req, res) => {
     const profile = await getUserData(user.access_token);
     res.status(HttpStatus.OK).json(profile);
   } catch (error) {
-    res.status(HttpStatus.BAD_REQUEST).json({ message: "Error fetching user details" });
+    res
+      .status(HttpStatus.BAD_REQUEST)
+      .json({ message: "Error fetching user details" });
   }
 });
 
@@ -94,7 +98,37 @@ app.post("/signup", async (req, res) => {
       .status(HttpStatus.CREATED)
       .json({ message: "User created successfully", user: newUser });
   } catch (error) {
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: "Sign up failed" });
+    res
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Sign up failed" });
+  }
+});
+
+// login users
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    // check if username exist in DB
+    const user = await prisma.user.findUnique({
+      where: { username },
+    });
+    if (!user) {
+      return res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ message: "Invalid username or password." });
+    }
+    // compares password with that in DB using bcrypt
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ error: "Invalid username or password." });
+    }
+    res.status(HttpStatus.OK).json({ message: "Login successful!" });
+  } catch (error) {
+    res
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Sign in failed" });
   }
 });
 
