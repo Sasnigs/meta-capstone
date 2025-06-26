@@ -4,7 +4,6 @@ import { useState } from "react";
 
 export default function Homepage() {
   const [moviesToshow, setMoviesToShow] = useState([]);
-  console.log(moviesToshow);
   return (
     <div>
       <Search setMoviesToShow={setMoviesToShow} />
