@@ -1,6 +1,13 @@
+import Search from "./Search"
+import MovieList from "./Movielist"
+
+
 export default function Homepage(){
     return(
-        // TODO: Homepage
-        <></>
+        <div>
+            <Search />
+            <MovieList />
+
+        </div>
     )
 }

@@ -1,0 +1,41 @@
+import { useState } from "react";
+
+export default function Search() {
+  const [searchValue, setSearchValue] = useState("");
+  const API_KEY = import.meta.env.VITE_OMBD_API_KEY;
+  OMBD_BASE_URL = "http://www.omdbapi.com/"
+
+  async function search(e) {
+     e.preventDefault()
+    try {
+        const res = await  fetch(`${OMBD_BASE_URL}?apikey=${API_KEY}&t=${searchValue}`)
+
+    } catch (error) {}
+  }
+
+
+  return (
+    <div>
+      <div>
+        <button>Movies</button>
+        <button>Comments</button>
+      </div>
+      <div>
+        <div>
+          <form onSubmit={(e) => search(e)}>
+            <input
+              value={searchValue}
+              name="query"
+              onChange={(e) => setSearchValue(e.target.value)}
+              required
+              placeholder="Search movies.."
+            />
+            <button type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
