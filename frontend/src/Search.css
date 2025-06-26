@@ -1,0 +1,25 @@
+.search-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search-form input {
+  padding: 10px 150px;
+  border-radius: 10px 0px 0px 10px;
+  border-right: none;
+}
+.search-form input[type="search"]::placeholder {
+  font-size: 20px;
+}
+.search-form button {
+  padding: 10px 20px;
+  border-radius: 0px 10px 10px 0px;
+  border-left: none;
+  cursor: pointer;
+}
