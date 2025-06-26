@@ -7,7 +7,6 @@ import Homepage from "./Homepage";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
-  
   function navigate(url) {
     window.location.href = url;
   }
