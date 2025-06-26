@@ -1,0 +1,58 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.SignUp-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+  gap: 20px;
+}
+.sign-in-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+.SignUp-div h1{
+    font-size: 50px;
+    color:#113f67 ;
+}
+.SignUp-div h3{
+    font-size: 30px;
+}
+.sign-in-form input {
+  padding: 10px 80px;
+}
+.sign-in-form input[type="text"]::placeholder {
+  text-align: center;
+  font-size: larger;
+}
+.sign-in-form input[type="password"]::placeholder {
+  text-align: center;
+  font-size: larger;
+}
+
+.sign-in-form button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #5585b5;
+  color: white;
+  cursor: pointer;
+  font-size: large;
+}
+.sign-up {
+  border: none;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  font-size: large;
+}

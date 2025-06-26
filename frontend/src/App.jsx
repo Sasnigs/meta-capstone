@@ -1,11 +1,13 @@
 import { useState } from "react";
 import "./App.css";
+import { BASE_URL } from "./data/data";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import Homepage from "./Homepage";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
-  const BASE_URL = "http://localhost:4500";
+  
   function navigate(url) {
     window.location.href = url;
   }
@@ -21,13 +23,10 @@ function App() {
 
   return (
     <>
-      <button type="button" onClick={() => auth()}>
-        Sign in
-      </button>
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="signUp" element={<SignUp />} />
-        <Route />
+        <Route path="/homepage" element={<Homepage />} />
       </Routes>
     </>
   );
