@@ -1,16 +1,21 @@
 import { useState } from "react";
 
-export default function Search() {
+export default function Search({setMoviesToShow}) {
   const [searchValue, setSearchValue] = useState("");
   const API_KEY = import.meta.env.VITE_OMBD_API_KEY;
-  OMBD_BASE_URL = "http://www.omdbapi.com/"
+  const OMBD_BASE_URL = "http://www.omdbapi.com/"
 
   async function search(e) {
      e.preventDefault()
     try {
-        const res = await  fetch(`${OMBD_BASE_URL}?apikey=${API_KEY}&t=${searchValue}`)
+        const res = await  fetch(`${OMBD_BASE_URL}?apikey=${API_KEY}&s=${searchValue}`)
+        const data = await res.json()
+        setMoviesToShow([data.Search])
+        setSearchValue("")
 
-    } catch (error) {}
+    } catch (error) {
+            console.log("Error fetching movies")
+    }
   }
 
 
