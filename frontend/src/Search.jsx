@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./Search.css";
+import { OMBD_BASE_URL } from "./data/data";
 
 export default function Search({ setMoviesToShow }) {
   const [searchValue, setSearchValue] = useState("");
   const API_KEY = import.meta.env.VITE_OMBD_API_KEY;
-  const OMBD_BASE_URL = "http://www.omdbapi.com/";
 
   async function search(e) {
     e.preventDefault();
