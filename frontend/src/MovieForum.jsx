@@ -1,19 +1,17 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { OMBD_BASE_URL } from "./data/data";
 import Comments from "./Comments";
 import "./MovieForum.css";
+import { GetMovieById } from "../utils/OMDBUtils";
 
 export default function MovieForum() {
   const { id } = useParams();
-  const API_KEY = import.meta.env.VITE_OMBD_API_KEY;
   const [movie, setMovie] = useState("");
 
   async function fetchMovie() {
     try {
-      const res = await fetch(`${OMBD_BASE_URL}?apikey=${API_KEY}&i=${id}`);
-      const data = await res.json();
-      setMovie(data);
+      const movie = await GetMovieById(id);
+      setMovie(movie);
     } catch (error) {
       console.error("Failed to fetch movie:", error);
     }
