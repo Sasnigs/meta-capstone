@@ -30,13 +30,10 @@ export default function MovieForum() {
             <b>Plot:</b> {movie.Plot}
           </p>
           <p>
-            <b>Released:</b> {movie.Released} ||
+            <b>Released:</b> {movie.Released}
             <span>
               <b>Runtime:</b> {movie.Runtime}
             </span>
-          </p>
-          <p>
-            <b>Rating:</b> {movie.imdbRating}
           </p>
         </div>
       </div>
