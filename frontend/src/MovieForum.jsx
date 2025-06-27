@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Comments from "./Comments";
 import "./MovieForum.css";
-import { GetMovieById } from "../utils/OMDBUtils";
+import { getMovieById } from "../utils/OMDBUtils";
 
 export default function MovieForum() {
   const { id } = useParams();
@@ -10,7 +10,7 @@ export default function MovieForum() {
 
   async function fetchMovie() {
     try {
-      const movie = await GetMovieById(id);
+      const movie = await getMovieById(id);
       setMovie(movie);
     } catch (error) {
       console.error("Failed to fetch movie:", error);

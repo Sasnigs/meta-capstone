@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "./Search.css";
-import { GetMoviesByTitle } from "../utils/OMDBUtils";
+import { getMoviesByTitle } from "../utils/OMDBUtils";
 
 export default function Search({ setMoviesToShow }) {
   const [searchValue, setSearchValue] = useState("");
   async function search(e) {
     e.preventDefault();
     try {
-      const movies = await GetMoviesByTitle(searchValue);
+      const movies = await getMoviesByTitle(searchValue);
       setMoviesToShow(movies);
       setSearchValue("");
     } catch (error) {
