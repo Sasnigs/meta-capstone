@@ -20,7 +20,6 @@ function App() {
       console.log("Error fetching data", error);
     }
   }
-
   return (
     <>
       <Routes>

@@ -6,7 +6,6 @@ export default function MovieCard({ movie }) {
       <img src={movie.Poster} alt={`${movie.Title}-image`} />
       <p>{movie.Title}</p>
       <p>Released: {movie.Year}</p>
-      <p>{movie.Released}</p>
     </div>
   );
 }
