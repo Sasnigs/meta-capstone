@@ -1,14 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { OMBD_BASE_URL } from "./data/data";
-import './MovieForum.css'
+import Comments from "./Comments";
+import "./MovieForum.css";
 
 export default function MovieForum() {
   const { id } = useParams();
   const API_KEY = import.meta.env.VITE_OMBD_API_KEY;
-
   const [movie, setMovie] = useState("");
-  const [comment, setComment] = useState("")
 
   async function fetchMovie() {
     try {
@@ -25,21 +24,24 @@ export default function MovieForum() {
 
   return (
     <div className="movie-cont">
-        <div className="movie-details">
-            <img src={movie.Poster} alt={`${movie.Title}-image`} />
-            <div className="movie-info">
-                <h1>{movie.Title}</h1>
-                <p> <b>Plot:</b> {movie.Plot}</p>
-                <p> <b>Released:</b>  {movie.Released} || <span>  <b>Runtime:</b> {movie.Runtime}</span></p>
-                <p> <b>Rating:</b> {movie.imdbRating} </p>
-            </div>
+      <div className="movie-details">
+        <img src={movie.Poster} alt={`${movie.Title}-image`} />
+        <div className="movie-info">
+          <h1>{movie.Title}</h1>
+          <p>
+            <b>Plot:</b> {movie.Plot}
+          </p>
+          <p>
+            <b>Released:</b> {movie.Released} ||
+            <span>
+              <b>Runtime:</b> {movie.Runtime}
+            </span>
+          </p>
+          <p>
+            <b>Rating:</b> {movie.imdbRating}
+          </p>
         </div>
-       <div>
-            <h1>Comments</h1>
-            <form action="">
-                <input type="text" name="" id="" />
-            </form>
-       </div>
+      </div>
     </div>
-  )
+  );
 }
