@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Search.css";
-import { getMoviesByTitle } from "../utils/OMDBUtils";
+import { getMoviesByTitle } from "../utils/OMDButils";
 
 export default function Search({ setMoviesToShow }) {
   const [searchValue, setSearchValue] = useState("");
