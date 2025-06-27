@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Search.css";
-import { getMoviesByTitle } from "../utils/OMDBUtils";
+import { getMoviesByTitle } from "../utils/OMDBUtils.js";
 
 export default function Search({ setMoviesToShow }) {
   const [searchValue, setSearchValue] = useState("");
@@ -11,6 +11,7 @@ export default function Search({ setMoviesToShow }) {
       setMoviesToShow(movies);
       setSearchValue("");
     } catch (error) {
+      console.log(error)
       console.error("Error fetching movies");
     }
   }
