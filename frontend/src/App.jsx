@@ -5,6 +5,7 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Homepage from "./Homepage";
 import { Routes, Route } from "react-router-dom";
+import MovieForum from "./MovieForum";
 
 function App() {
   function navigate(url) {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<SignIn />} />
         <Route path="signUp" element={<SignUp />} />
         <Route path="/homepage" element={<Homepage />} />
+        <Route path="/movie/:id" element={<MovieForum />} />
       </Routes>
     </>
   );
