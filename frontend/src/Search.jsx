@@ -13,7 +13,7 @@ export default function Search({ setMoviesToShow }) {
         `${OMBD_BASE_URL}?apikey=${API_KEY}&s=${searchValue}`
       );
       const data = await res.json();
-      setMoviesToShow([data.Search]);
+      setMoviesToShow(data.Search);
       setSearchValue("");
     } catch (error) {
       console.error("Error fetching movies");
