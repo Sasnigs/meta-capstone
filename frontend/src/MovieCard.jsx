@@ -4,8 +4,10 @@ export default function MovieCard({ movie }) {
   return (
     <div className="movie-card">
       <img src={movie.Poster} alt={`${movie.Title}-image`} />
-      <p>{movie.Title}</p>
-      <p>Released: {movie.Year}</p>
+      <div>
+        <p>{movie.Title}</p>
+        <p> <b>Released:</b> {movie.Year}</p>
+      </div>
     </div>
   );
 }

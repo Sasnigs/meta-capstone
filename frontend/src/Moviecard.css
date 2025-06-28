@@ -1,10 +1,15 @@
 .movie-card {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
-  padding: 10px;
-  background: #5c8d89;
-  width: 300px;
+  gap: 10px;
+  margin-bottom: 10px;
+  width: 200px;
+
+}
+.movie-card img{
+ max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
