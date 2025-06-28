@@ -11,7 +11,6 @@ export default function Search({ setMoviesToShow }) {
       setMoviesToShow(movies);
       setSearchValue("");
     } catch (error) {
-      console.log(error)
       console.error("Error fetching movies");
     }
   }
