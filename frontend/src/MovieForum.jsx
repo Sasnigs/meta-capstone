@@ -37,6 +37,7 @@ export default function MovieForum() {
           </p>
         </div>
       </div>
+      <Comments />
     </div>
   );
 }
