@@ -13,7 +13,12 @@ const prisma = new PrismaClient();
 const saltRounds = 10;
 const PORT = process.env.PORT || 4500;
 const BASE_URL = "http://localhost:4500";
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5175", 
+    credentials: true,        
+  })
+);
 app.use(express.json());
 
 app.use(

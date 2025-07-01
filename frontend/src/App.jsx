@@ -15,7 +15,7 @@ function App() {
     try {
       const res = await fetch(`${BASE_URL}/me`, { credentials: "include" });
       const data = await res.json();
-      if (res.ok && data.loggedIn) {
+      if (res.ok) {
         setUser(data);
       } else {
         setUser(null);
