@@ -4,7 +4,7 @@ import { BASE_URL } from "./data/data";
 import { useNavigate } from "react-router-dom";
 import "./SignIn.css";
 
-export default function SignIn() {
+export default function SignIn({ checkSession }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -21,9 +21,11 @@ export default function SignIn() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
       if (res.ok) {
         const data = await res.json();
+        await checkSession();
         navigate("/homepage", { replace: true });
       } else {
         const data = await res.json();
