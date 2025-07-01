@@ -42,6 +42,7 @@ function App() {
       console.log("Error fetching data", error);
     }
   }
+  // TODO: STYLE LOADING SCREEN TO MEET PJ REQ.
   if (checkingSession) return <div>Loading...</div>;
   return (
     <>
