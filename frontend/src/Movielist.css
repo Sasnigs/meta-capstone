@@ -1,21 +1,19 @@
-.movie-list{
-    display: flex;
-    flex-direction: column;
-   
+.movie-list {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 15px;
+ width: 100%;
 }
-.link-no-style{
-    text-decoration: none;
-    color: black;
-    font-size: large;
-    font-weight: 500;
-     width: 500px;
-     height: 250px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
+.link-no-style {
+ text-decoration: none;
+ color: inherit;
+ width: 100%;
+ display: flex;
+ justify-content: center;
 }
-.movie-list-cont{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.movie-list-cont {
+ width: 100%;
+ display: flex;
+ justify-content: center;
 }

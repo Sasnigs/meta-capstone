@@ -6,7 +6,6 @@ export default function MovieList({ moviesToshow }) {
   return (
     <div className="movie-list-cont">
       <div className="movie-list">
-        {console.log(moviesToshow)}
         {moviesToshow.map((movie, index) => (
           <Link
             to={`/movie/${movie.imdbID}`}
