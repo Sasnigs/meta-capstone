@@ -15,8 +15,8 @@ const PORT = process.env.PORT || 4500;
 const BASE_URL = "http://localhost:4500";
 app.use(
   cors({
-    origin: "http://localhost:5175", 
-    credentials: true,        
+    origin: "http://localhost:5175",
+    credentials: true,
   })
 );
 app.use(express.json());
@@ -39,7 +39,7 @@ const HttpStatus = {
   BAD_REQUEST: 400,
   NOT_FOUND: 404,
   INTERNAL_SERVER_ERROR: 500,
-  UNAUTHORIZED: 401
+  UNAUTHORIZED: 401,
 };
 
 // Google Auth
@@ -158,13 +158,11 @@ app.post("/login", async (req, res) => {
 app.get("/me", (req, res) => {
   if (req.session.userId) {
     res.status(HttpStatus.OK).json({
-      userId: req.session.userId
+      userId: req.session.userId,
     });
   } else {
-    res.status(HttpStatus.UNAUTHORIZED).json({message: "Not logged in"});
+    res.status(HttpStatus.UNAUTHORIZED).json({ message: "Not logged in" });
   }
 });
-
-
 
 app.listen(PORT, console.log(`Server running on http://localhost:${PORT}`));

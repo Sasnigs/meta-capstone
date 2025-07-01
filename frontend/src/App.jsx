@@ -65,8 +65,16 @@ function App() {
             )
           }
         />
-        <Route path="/homepage" element={user ? <Homepage /> : <Navigate to="/" replace />} />
-        <Route path="/movie/:id" element={user ? <MovieForum user={user} /> : <Navigate to="/" replace /> } />
+        <Route
+          path="/homepage"
+          element={user ? <Homepage /> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="/movie/:id"
+          element={
+            user ? <MovieForum user={user} /> : <Navigate to="/" replace />
+          }
+        />
       </Routes>
     </>
   );
