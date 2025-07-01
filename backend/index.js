@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
 import { OAuth2Client } from "google-auth-library";
 import { getUserData } from "./auth-function/getUserData.js";
+import session from "express-session";
 
 dotenv.config();
 const app = express();
@@ -12,8 +13,25 @@ const prisma = new PrismaClient();
 const saltRounds = 10;
 const PORT = process.env.PORT || 4500;
 const BASE_URL = "http://localhost:4500";
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
 
 const HttpStatus = {
   OK: 200,
@@ -21,6 +39,7 @@ const HttpStatus = {
   BAD_REQUEST: 400,
   NOT_FOUND: 404,
   INTERNAL_SERVER_ERROR: 500,
+  UNAUTHORIZED: 401,
 };
 
 // Google Auth
@@ -94,6 +113,7 @@ app.post("/signup", async (req, res) => {
         password: hashedPassword,
       },
     });
+    req.session.userId = newUser.id;
     res
       .status(HttpStatus.CREATED)
       .json({ message: "User created successfully", user: newUser });
@@ -124,11 +144,24 @@ app.post("/login", async (req, res) => {
         .status(HttpStatus.BAD_REQUEST)
         .json({ error: "Invalid username or password." });
     }
+    //create session
+    req.session.userId = user.id;
     res.status(HttpStatus.OK).json({ message: "Login successful!" });
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
       .json({ message: "Sign in failed" });
+  }
+});
+
+// check for and get user info upon sign up/ login
+app.get("/me", (req, res) => {
+  if (req.session.userId) {
+    res.status(HttpStatus.OK).json({
+      userId: req.session.userId,
+    });
+  } else {
+    res.status(HttpStatus.UNAUTHORIZED).json({ message: "Not logged in" });
   }
 });
 

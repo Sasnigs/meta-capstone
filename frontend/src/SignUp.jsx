@@ -3,7 +3,7 @@ import { BASE_URL } from "./data/data";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
-export default function SignUp() {
+export default function SignUp({checkSession}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -22,10 +22,12 @@ export default function SignUp() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials: "include",
       });
       if (res.ok) {
         const data = await res.json();
-       navigate("/homepage", { replace: true });
+        await checkSession()
+        navigate("/homepage", { replace: true });
       } else {
         const data = await res.json();
         alert(data.message);
