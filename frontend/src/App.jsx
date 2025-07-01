@@ -23,7 +23,6 @@ function App() {
     } catch (error) {
       setUser(null);
     }
-    setCheckingSession(false);
   }
   useEffect(() => {
     checkSession();
