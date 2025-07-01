@@ -9,7 +9,7 @@ import MovieForum from "./MovieForum";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [checkingSession, setCheckingSession] = useState(true);
+  
 
   async function checkSession() {
     try {
@@ -28,7 +28,7 @@ function App() {
   useEffect(() => {
     checkSession();
   }, []);
-  if (checkingSession) return <div>Loading...</div>;
+ 
 
   function navigate(url) {
     window.location.href = url;
