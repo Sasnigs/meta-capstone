@@ -9,7 +9,7 @@ import MovieForum from "./MovieForum";
 
 function App() {
   const [user, setUser] = useState(null);
-  
+  const [checkingSession, setCheckingSession] = useState(true)
 
   async function checkSession() {
     try {
@@ -23,6 +23,7 @@ function App() {
     } catch (error) {
       setUser(null);
     }
+    setCheckingSession(false);
   }
   useEffect(() => {
     checkSession();
@@ -41,6 +42,8 @@ function App() {
       console.log("Error fetching data", error);
     }
   }
+  // TODO: STYLE LOADING SCREEN TO MEET PJ REQ.
+  if (checkingSession) return <div>Loading...</div>;
   return (
     <>
       <Routes>
