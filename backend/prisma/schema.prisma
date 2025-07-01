@@ -36,7 +36,5 @@ model Comments {
   userId        String   @unique
   user          User     @relation(fields: [userId], references: [id])
   movieId       String
-  upVoteCount   Int      @default(0)
-  downVoteCount Int      @default(0)
   createdAt     DateTime @default(now())
 }
