@@ -9,7 +9,7 @@ import MovieForum from "./MovieForum";
 
 function App() {
   const [user, setUser] = useState(null);
-  
+  const [checkingSession, setCheckingSession] = useState(true)
 
   async function checkSession() {
     try {
@@ -42,6 +42,7 @@ function App() {
       console.log("Error fetching data", error);
     }
   }
+  if (checkingSession) return <div>Loading...</div>;
   return (
     <>
       <Routes>
