@@ -14,10 +14,7 @@ const saltRounds = 10;
 const PORT = process.env.PORT || 4500;
 const BASE_URL = "http://localhost:4500";
 app.use(
-  cors({
-    origin: "http://localhost:5175",
-    credentials: true,
-  })
+  cors()
 );
 app.use(express.json());
 
