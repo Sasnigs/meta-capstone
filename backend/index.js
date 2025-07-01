@@ -109,7 +109,6 @@ app.post("/signup", async (req, res) => {
       },
     });
     req.session.userId = newUser.id;
-    req.session.username = newUser.username;
     res
       .status(HttpStatus.CREATED)
       .json({ message: "User created successfully", user: newUser });
@@ -142,7 +141,6 @@ app.post("/login", async (req, res) => {
     }
     //create session
     req.session.userId = user.id;
-    req.session.username = user.username;
     res.status(HttpStatus.OK).json({ message: "Login successful!" });
   } catch (error) {
     res
@@ -155,22 +153,13 @@ app.post("/login", async (req, res) => {
 app.get("/me", (req, res) => {
   if (req.session.userId) {
     res.status(HttpStatus.OK).json({
-      loggedIn: true,
-      userId: req.session.userId,
-      username: req.session.username,
+      userId: req.session.userId
     });
   } else {
-    res.status(HttpStatus.UNAUTHORIZED).json({ loggedIn: false });
+    res.status(HttpStatus.UNAUTHORIZED).json({message: "Not logged in"});
   }
 });
-// middleware to protect private route
-function isAuthenticated(req, res, next) {
-  if (req.session.userId) {
-    next(); 
-  } else {
-    res.status(HttpStatus.UNAUTHORIZED).json({ message: "Not logged in" });
-  }
-}
+
 
 
 app.listen(PORT, console.log(`Server running on http://localhost:${PORT}`));
