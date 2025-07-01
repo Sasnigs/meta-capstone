@@ -14,17 +14,21 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  username  String   @unique
-  email     String   @unique
+  id        String     @id @default(uuid())
+  username  String     @unique
+  email     String     @unique
   password  String
-  profile   Profile?
-  createdAt DateTime @default(now())
+  createdAt DateTime   @default(now())
+  comment   Comments[]
 }
 
-model Profile {
-  id     String @id @default(uuid())
-  bio    String
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+model Comments {
+  id        String   @id @default(uuid())
+  message   String
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  movieId   String
+  createdAt DateTime @default(now())
+  upVotes   Int      @default(0)
+  downVotes Int      @default(0)
 }
