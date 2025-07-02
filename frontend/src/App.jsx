@@ -61,7 +61,7 @@ function App() {
           path="signUp"
           element={
             user ? (
-              <Navigate to="homepage" replace />
+              <Navigate to="/homepage" replace />
             ) : (
               <SignUp checkSession={checkSession} />
             )

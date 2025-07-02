@@ -17,6 +17,10 @@
   align-items: center;
   gap: 12px;
 }
+.user-area p {
+  word-break: break-word;
+  max-width: 100%;
+}
 
 .user-area p:first-child {
   font-weight: bold;
