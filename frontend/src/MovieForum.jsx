@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Comments from "./Comments"
 import "./MovieForum.css";
 import { getMovieById } from "../utils/OMDBUtils";
 
@@ -36,6 +37,7 @@ export default function MovieForum() {
           </p>
         </div>
       </div>
+        <Comments />
     </div>
   );
 }
