@@ -25,7 +25,7 @@ model User {
 model Comments {
   id        String   @id @default(uuid())
   message   String
-  userId    String   @unique
+  userId    String   
   user      User     @relation(fields: [userId], references: [id])
   movieId   String
   createdAt DateTime @default(now())
