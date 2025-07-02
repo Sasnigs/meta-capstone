@@ -10,10 +10,6 @@ export default function CommentCard({commentInfo}) {
             <p>{commentInfo.message}</p>
           </div>
         </div>
-        <div className="up-down-vote">
-          <p>⬆{commentInfo.upVotes}</p>
-          <p>⬇{commentInfo.downVotes}</p>
-        </div>
       </div>
     </div>
   );

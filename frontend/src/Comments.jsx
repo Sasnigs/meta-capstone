@@ -41,7 +41,7 @@ export default function Comments({ id }) {
         alert(data.message);
       }
     } catch (error) {
-      console.error("Error:", error);
+        
     }
   }
 
