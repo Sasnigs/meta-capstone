@@ -153,6 +153,56 @@ app.post("/login", async (req, res) => {
       .json({ message: "Sign in failed" });
   }
 });
+function isAuthenticated(req, res, next) {
+  if (req.session.userId) {
+    next();
+  } else {
+    res.status(HttpStatus.UNAUTHORIZED).json({ message: "Not logged in" });
+  }
+}
+// get all comments
+app.get("/comments/:movieId", async (req, res) => {
+  const movieId = req.params.movieId;
+  try {
+    // find all comments for a specific movie(movieId) and include the user who made those comments.
+    const commentsArray = await prisma.comments.findMany({
+      where: {
+        movieId: movieId,
+      },
+      include: {
+        user: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    res.status(HttpStatus.OK).json(commentsArray);
+  } catch (error) {
+    res
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Error fetching data" });
+  }
+});
+
+// post a comment
+app.post("/comment", isAuthenticated, async (req, res) => {
+  const { message, movieId,  } = req.body;
+  try {
+    const newComment = await prisma.comments.create({
+      data: {
+        message,
+        movieId,
+        userId: req.session.userId,
+      },
+    });
+    res.status(HttpStatus.OK).json(newComment);
+  } catch (error) {
+    res
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Failed to create comment" });
+  }
+});
+
 
 // check for and get user info upon sign up/ login
 app.get("/me", (req, res) => {
