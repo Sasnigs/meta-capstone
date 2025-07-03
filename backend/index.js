@@ -179,10 +179,12 @@ app.get("/comments/:movieId", async (req, res) => {
       },
     });
     if (sortType){
-     const newArray =  sortComment(commentsArray, sortType)
+     const newArray = sortComment(commentsArray, sortType)
      res.status(HttpStatus.OK).json(newArray);
+    }else{
+       res.status(HttpStatus.OK).json(commentsArray);
     }
-    res.status(HttpStatus.OK).json(commentsArray);
+   
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
