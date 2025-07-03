@@ -6,6 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import { OAuth2Client } from "google-auth-library";
 import { getUserData } from "./auth-function/getUserData.js";
 import session from "express-session";
+import { sortComment } from "./sort-function/sortComment.js";
 
 dotenv.config();
 const app = express();
@@ -163,6 +164,7 @@ function isAuthenticated(req, res, next) {
 // get all comments
 app.get("/comments/:movieId", async (req, res) => {
   const movieId = req.params.movieId;
+  const sortType = req.query.sortType
   try {
     // find all comments for a specific movie(movieId) and include the user who made those comments.
     const commentsArray = await prisma.comments.findMany({
@@ -176,6 +178,10 @@ app.get("/comments/:movieId", async (req, res) => {
         createdAt: "desc",
       },
     });
+    if (sortType){
+     const newArray =  sortComment(commentsArray, sortType)
+     res.status(HttpStatus.OK).json(newArray);
+    }
     res.status(HttpStatus.OK).json(commentsArray);
   } catch (error) {
     res

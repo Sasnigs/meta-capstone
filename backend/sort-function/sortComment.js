@@ -10,24 +10,25 @@ const sortBy = {
 
 export function sortComment(array, sortType) {
   if (sortType === sortBy.most_loved ) {
-    array.sort((x, y) => x.upVotes - y.upVotes);
+    return array.sort((x, y) => y.upVotes - x.upVotes);
   }
   else if (sortType === sortBy.most_hated) {
-    array.sort((x, y) => x.downVotes - y.downVotes);
+   return  array.sort((x, y) => y.downVotes - x.downVotes);
   }
   else if (sortType === sortBy.most_recent) {
-    array.sort((x, y) => new Date(x.createdAt) - new Date(y.createdAt));
+   return  array.sort((x, y) => new Date(x.createdAt) - new Date(y.createdAt));
   }
   else if (sortType === sortBy.oldest_user) {
-    array.sort((x, y) => x.user.createdAt - y.user.createdAt);
+   return  array.sort((x, y) => y.user.createdAt - x.user.createdAt);
   }
   else if (sortType === sortBy.controversial){
     array.map((comment) => {
         let controversial_score = abs(1 - (comment.upVotes / comment.downVotes))
         comment.controversial = controversial_score
     })
-    array.sort((x,y) => x.controversial - y.controversial)
+   return  array.sort((x,y) => y.controversial - x.controversial)
   }
+  // TODO: sort for trending and net-useful
 }
 // jin: use elif/enum for conditional statements
 // todo: check for api that shows trailer
