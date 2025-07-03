@@ -1,10 +1,11 @@
-import "./commentcard.css";
+import "./CommentCard.css";
 
 export default function CommentCard({ commentInfo }) {
   return (
     <div>
       <div className="comment-cont">
         <div className="user-area">
+          {"// TODO"}
           <div className="tooltip-wrapper">
             <span className="username">@{commentInfo.user.username}</span>
             <div className="tooltip">
