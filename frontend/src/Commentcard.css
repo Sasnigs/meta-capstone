@@ -8,39 +8,49 @@
   margin: 10px auto;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  border: 1px solid black;
+  border: 1px solid grey;
 }
-
 .user-area {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 .user-area p {
   word-break: break-word;
   max-width: 100%;
 }
-
-.user-area p:first-child {
-  font-weight: bold;
-  padding-top: 10px;
-  color: #333;
-}
-
-.user-area p:last-child {
+.user-area p {
   margin: 4px 0 0;
   color: #666;
 }
 
-.up-down-vote {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
 }
-
-.up-down-vote p {
+.username {
   cursor: pointer;
-  font-size: 18px;
-  color: #666;
+  color: #2980b9;
+}
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  background-color: white;
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  transition: opacity 0.2s ease-in-out;
+  font-size: 12px;
+  white-space: nowrap;
+  font-size: 15px;
+}
+.tooltip-wrapper:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
