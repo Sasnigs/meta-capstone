@@ -5,7 +5,7 @@ const sortBy = {
     oldest_user: "Oldest User",
     controversial: "Controversial",
     trending: "Trending",
-    net_usefule: "Net Useful"
+    net_useful: "Net Useful"
 }
 
 export function sortComment(array, sortType) {
