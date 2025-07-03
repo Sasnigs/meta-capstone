@@ -5,7 +5,6 @@ export default function CommentCard({ commentInfo }) {
     <div>
       <div className="comment-cont">
         <div className="user-area">
-          {"// TODO"}
           <div className="tooltip-wrapper">
             <span className="username">@{commentInfo.user.username}</span>
             <div className="tooltip">
