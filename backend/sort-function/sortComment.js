@@ -26,14 +26,6 @@ export function sortComment(array, sortType) {
         (x, y) => new Date(x.user.createdAt) - new Date(y.user.createdAt)
       );
 
-    case SORT_TYPE.CONTROVERSIAL:
-      array.forEach((comment) => {
-        comment.controversial = Math.abs(
-          1 - comment.upVotes / (comment.downVotes || 1)
-        );
-      });
-      return array.sort((x, y) => y.controversial - x.controversial);
-
     case SORT_TYPE.TRENDING:
       // TODO: implement trending sort logic
       return array;
