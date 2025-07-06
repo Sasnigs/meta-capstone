@@ -1,3 +1,4 @@
+import { wilsonScore } from "./wilsonScore";
 const SORT_TYPE = {
   MOST_LOVED: "most_loved",
   MOST_HATED: "most_hated",
@@ -31,9 +32,11 @@ export function sortComment(array, sortType) {
       return array;
 
     case SORT_TYPE.NET_USEFUL:
-      // TODO: implement net useful sort logic
-      return array;
-
+      return array.sort(
+        (x, y) =>
+          wilsonScore(y.upVotes, y.downVotes) -
+          wilsonScore(x.upVotes, x.downVotes)
+      );
     default:
       return array;
   }
