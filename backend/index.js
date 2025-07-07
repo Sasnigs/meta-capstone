@@ -192,7 +192,7 @@ app.get("/comments/:movieId", async (req, res) => {
   }
 });
 // increment upvote
-app.patch("/comments/:commentId/upvote", async (req, res) => {
+app.patch("/comments/:commentId/upvote", isAuthenticated,  async (req, res) => {
   const { commentId } = req.params;
   try {
     const comment = await prisma.comments.findUnique({ where: { id: commentId } });
@@ -215,7 +215,7 @@ app.patch("/comments/:commentId/upvote", async (req, res) => {
 });
 
 // increment downvote
-app.patch("/comments/:commentId/downvote", async (req, res) => {
+app.patch("/comments/:commentId/downvote", isAuthenticated,  async (req, res) => {
   const { commentId } = req.params;
   try {
     const comment = await prisma.comments.findUnique({ where: { id: commentId } });
