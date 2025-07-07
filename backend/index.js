@@ -197,7 +197,7 @@ app.patch("/comments/:commentId/upvote", isAuthenticated,  async (req, res) => {
   try {
     const comment = await prisma.comments.findUnique({ where: { id: commentId } });
     if (!comment) {
-      return res.status(404).json({ message: "comment not found" });
+      return res.status(HttpStatus.NOT_FOUND).json({ message: "comment not found" });
     }
     const updateVote = await prisma.comments.update({
       where: { id: commentId },
@@ -207,10 +207,10 @@ app.patch("/comments/:commentId/upvote", isAuthenticated,  async (req, res) => {
         },
       },
     });
-    res.status(201).json({ success: true, data: updateVote });
+    res.status(HttpStatus.OK).json({ success: true, data: updateVote });
   } catch (error) {
     console.error("Error updating comment:", error);
-    res.status(500).json({ message: "failed to upvote" });
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: "failed to upvote" });
   }
 });
 
@@ -220,7 +220,7 @@ app.patch("/comments/:commentId/downvote", isAuthenticated,  async (req, res) =>
   try {
     const comment = await prisma.comments.findUnique({ where: { id: commentId } });
     if (!comment) {
-      return res.status(404).json({ message: "comment not found" });
+      return res.status(HttpStatus.NOT_FOUND).json({ message: "comment not found" });
     }
     const downvote = await prisma.comments.update({
       where: { id: commentId },
@@ -230,10 +230,10 @@ app.patch("/comments/:commentId/downvote", isAuthenticated,  async (req, res) =>
         },
       },
     });
-    res.status(201).json({ success: true, data: downvote });
+    res.status(HttpStatus.OK).json({ success: true, data: downvote });
   } catch (error) {
     console.error("Error updating comment:", error);
-    res.status(500).json({ message: "failed to downvote" });
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: "failed to downvote" });
   }
 });
 
