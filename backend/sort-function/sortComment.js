@@ -1,6 +1,14 @@
+import {
+  MostRecent,
+  LeastHated,
+  MostLoved,
+  NetUseful,
+  OldestUser,
+} from "./commentSort.js";
+
 const SORT_TYPE = {
   MOST_LOVED: "most_loved",
-  MOST_HATED: "most_hated",
+  LEAST_HATED: "least_hated",
   MOST_RECENT: "most_recent",
   OLDEST_USER: "oldest_user",
   CONTROVERSIAL: "controversial",
@@ -9,32 +17,35 @@ const SORT_TYPE = {
 };
 
 export function sortComment(array, sortType) {
+  let sorter;
   switch (sortType) {
     case SORT_TYPE.MOST_LOVED:
-      return array.sort((x, y) => y.upVotes - x.upVotes);
+      sorter = new MostLoved();
+      break;
 
-    case SORT_TYPE.MOST_HATED:
-      return array.sort((x, y) => y.downVotes - x.downVotes);
+    case SORT_TYPE.LEAST_HATED:
+      sorter = new LeastHated();
+       break;
 
     case SORT_TYPE.MOST_RECENT:
-      return array.sort(
-        (x, y) => new Date(y.createdAt) - new Date(x.createdAt)
-      );
+      sorter = new MostRecent();
+       break;
 
     case SORT_TYPE.OLDEST_USER:
-      return array.sort(
-        (x, y) => new Date(x.user.createdAt) - new Date(y.user.createdAt)
-      );
-
-    case SORT_TYPE.TRENDING:
-      // TODO: implement trending sort logic
-      return array;
+      sorter = new OldestUser();
+       break;
 
     case SORT_TYPE.NET_USEFUL:
-      // TODO: implement net useful sort logic
-      return array;
+      sorter = new NetUseful();
+       break;
 
-    default:
-      return array;
+    case SORT_TYPE.TRENDING:
+    // TODO: implement trending sort logic
+     break;
+
+    case SORT_TYPE.CONTROVERSIAL:
+    // TODO: implement controversial logic
+     break;
   }
+  return sorter ? sorter.sort(array) : array;
 }
