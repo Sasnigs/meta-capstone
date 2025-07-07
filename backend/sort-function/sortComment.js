@@ -1,6 +1,6 @@
 import {
   MostRecent,
-  MostHated,
+  LeastHated,
   MostLoved,
   NetUseful,
   OldestUser,
@@ -8,7 +8,7 @@ import {
 
 const SORT_TYPE = {
   MOST_LOVED: "most_loved",
-  MOST_HATED: "most_hated",
+  LEAST_HATED: "least_hated",
   MOST_RECENT: "most_recent",
   OLDEST_USER: "oldest_user",
   CONTROVERSIAL: "controversial",
@@ -17,29 +17,38 @@ const SORT_TYPE = {
 };
 
 export function sortComment(array, sortType) {
+  let sorter;
   switch (sortType) {
     case SORT_TYPE.MOST_LOVED:
-      return MostLoved.sort(array);
+      sorter = new MostLoved();
+      break;
 
-    case SORT_TYPE.MOST_HATED:
-      return MostHated.sort(array);
+    case SORT_TYPE.LEAST_HATED:
+      sorter = new LeastHated();
+       break;
 
     case SORT_TYPE.MOST_RECENT:
-      return MostRecent.sort(array);
+      sorter = new MostRecent();
+       break;
 
     case SORT_TYPE.OLDEST_USER:
-      return OldestUser.sort(array);
+      sorter = new OldestUser();
+       break;
 
     case SORT_TYPE.NET_USEFUL:
-      return NetUseful.sort(array);
+      sorter = new NetUseful();
+       break;
 
     case SORT_TYPE.TRENDING:
     // TODO: implement trending sort logic
-    
+     break;
+
     case SORT_TYPE.CONTROVERSIAL:
     // TODO: implement controversial logic
+     break;
 
     default:
       return array;
   }
+  return sorter ? sorter.sort(array) : array;
 }
