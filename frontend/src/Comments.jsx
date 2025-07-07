@@ -41,9 +41,37 @@ export default function Comments({ id }) {
         alert(data.message);
       }
       // TODO
-    } catch (error) {
-        
-    }
+    } catch (error) {}
+  }
+  async function upVotes(id) {
+    try {
+      const res = await fetch(`${BASE_URL}/comments/${id}/upvote`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (res.ok) {
+        getComments();
+      }
+       // TODO
+    } catch (error) {}
+  }
+  async function downVotes(id) {
+    try {
+      const res = await fetch(`${BASE_URL}/comments/${id}/downvote`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (res.ok) {
+        getComments();
+      }
+       // TODO
+    } catch (error) {}
   }
 
   return (
@@ -67,7 +95,12 @@ export default function Comments({ id }) {
       <div className="comments-box">
         {allComments.length !== 0 ? (
           allComments.map((commentInfo) => (
-            <CommentCard commentInfo={commentInfo} key={commentInfo.id} />
+            <CommentCard
+              commentInfo={commentInfo}
+              key={commentInfo.id}
+              upVotes={upVotes}
+              downVotes={downVotes}
+            />
           ))
         ) : (
           <p>No comments yet.</p>
