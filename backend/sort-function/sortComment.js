@@ -1,4 +1,11 @@
-import { wilsonScore } from "./wilsonScore";
+import {
+  MostRecent,
+  MostHated,
+  MostLoved,
+  NetUseful,
+  OldestUser,
+} from "./commentSort.js";
+
 const SORT_TYPE = {
   MOST_LOVED: "most_loved",
   MOST_HATED: "most_hated",
@@ -12,31 +19,26 @@ const SORT_TYPE = {
 export function sortComment(array, sortType) {
   switch (sortType) {
     case SORT_TYPE.MOST_LOVED:
-      return array.sort((x, y) => y.upVotes - x.upVotes);
+      return MostLoved.sort(array);
 
     case SORT_TYPE.MOST_HATED:
-      return array.sort((x, y) => y.downVotes - x.downVotes);
+      return MostHated.sort(array);
 
     case SORT_TYPE.MOST_RECENT:
-      return array.sort(
-        (x, y) => new Date(y.createdAt) - new Date(x.createdAt)
-      );
+      return MostRecent.sort(array);
 
     case SORT_TYPE.OLDEST_USER:
-      return array.sort(
-        (x, y) => new Date(x.user.createdAt) - new Date(y.user.createdAt)
-      );
-
-    case SORT_TYPE.TRENDING:
-      // TODO: implement trending sort logic
-      return array;
+      return OldestUser.sort(array);
 
     case SORT_TYPE.NET_USEFUL:
-      return array.sort(
-        (x, y) =>
-          wilsonScore(y.upVotes, y.downVotes) -
-          wilsonScore(x.upVotes, x.downVotes)
-      );
+      return NetUseful.sort(array);
+
+    case SORT_TYPE.TRENDING:
+    // TODO: implement trending sort logic
+    
+    case SORT_TYPE.CONTROVERSIAL:
+    // TODO: implement controversial logic
+
     default:
       return array;
   }
