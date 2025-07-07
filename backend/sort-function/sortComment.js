@@ -46,9 +46,6 @@ export function sortComment(array, sortType) {
     case SORT_TYPE.CONTROVERSIAL:
     // TODO: implement controversial logic
      break;
-
-    default:
-      return array;
   }
   return sorter ? sorter.sort(array) : array;
 }
