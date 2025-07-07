@@ -192,15 +192,15 @@ app.get("/comments/:movieId", async (req, res) => {
   }
 });
 // increment upvote
-app.patch("/comments/:commentId/upvote", isAuthenticated,  async (req, res) => {
+app.patch("/comments/:commentId/upvote", async (req, res) => {
   const { commentId } = req.params;
   try {
-    const comment = await prisma.comments.findUnique({ where: { commentId } });
+    const comment = await prisma.comments.findUnique({ where: { id: commentId } });
     if (!comment) {
       return res.status(404).json({ message: "comment not found" });
     }
     const updateVote = await prisma.comments.update({
-      where: { commentId },
+      where: { id: commentId },
       data: {
         upVotes: {
           increment: 1,
@@ -209,31 +209,34 @@ app.patch("/comments/:commentId/upvote", isAuthenticated,  async (req, res) => {
     });
     res.status(201).json({ success: true, data: updateVote });
   } catch (error) {
+    console.error("Error updating comment:", error);
     res.status(500).json({ message: "failed to upvote" });
   }
 });
 
 // increment downvote
-app.patch("/comments/:commentId/upvote", isAuthenticated,  async (req, res) => {
+app.patch("/comments/:commentId/downvote", async (req, res) => {
   const { commentId } = req.params;
   try {
-    const comment = await prisma.comments.findUnique({ where: { commentId } });
+    const comment = await prisma.comments.findUnique({ where: { id: commentId } });
     if (!comment) {
       return res.status(404).json({ message: "comment not found" });
     }
-    const updateVote = await prisma.comments.update({
-      where: { commentId },
+    const downvote = await prisma.comments.update({
+      where: { id: commentId },
       data: {
-        upVotes: {
+        downVotes: {
           increment: 1,
         },
       },
     });
-    res.status(201).json({ success: true, data: updateVote });
+    res.status(201).json({ success: true, data: downvote });
   } catch (error) {
-    res.status(500).json({ message: "failed to upvote" });
+    console.error("Error updating comment:", error);
+    res.status(500).json({ message: "failed to downvote" });
   }
 });
+
 // post a comment
 app.post("/comment", isAuthenticated, async (req, res) => {
   const { message, movieId,  } = req.body;
