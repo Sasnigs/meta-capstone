@@ -191,6 +191,51 @@ app.get("/comments/:movieId", async (req, res) => {
       .json({ message: "Error fetching data" });
   }
 });
+// increment upvote
+app.patch("/comments/:commentId/upvote", isAuthenticated,  async (req, res) => {
+  const { commentId } = req.params;
+  try {
+    const comment = await prisma.comments.findUnique({ where: { id: commentId } });
+    if (!comment) {
+      return res.status(HttpStatus.NOT_FOUND).json({ message: "comment not found" });
+    }
+    const updateVote = await prisma.comments.update({
+      where: { id: commentId },
+      data: {
+        upVotes: {
+          increment: 1,
+        },
+      },
+    });
+    res.status(HttpStatus.OK).json({ success: true, data: updateVote });
+  } catch (error) {
+    console.error("Error updating comment:", error);
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: "failed to upvote" });
+  }
+});
+
+// increment downvote
+app.patch("/comments/:commentId/downvote", isAuthenticated,  async (req, res) => {
+  const { commentId } = req.params;
+  try {
+    const comment = await prisma.comments.findUnique({ where: { id: commentId } });
+    if (!comment) {
+      return res.status(HttpStatus.NOT_FOUND).json({ message: "comment not found" });
+    }
+    const downvote = await prisma.comments.update({
+      where: { id: commentId },
+      data: {
+        downVotes: {
+          increment: 1,
+        },
+      },
+    });
+    res.status(HttpStatus.OK).json({ success: true, data: downvote });
+  } catch (error) {
+    console.error("Error updating comment:", error);
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: "failed to downvote" });
+  }
+});
 
 // post a comment
 app.post("/comment", isAuthenticated, async (req, res) => {
