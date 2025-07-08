@@ -32,7 +32,7 @@ model Comment {
   createdAt DateTime @default(now())
   upVotes   Int      @default(0)
   downVotes Int      @default(0)
-  Votes      Vote[]
+  votes      Vote[]
 }
 
 model Vote {
