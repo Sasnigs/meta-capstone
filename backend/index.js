@@ -164,10 +164,10 @@ function isAuthenticated(req, res, next) {
 // get all comments
 app.get("/comments/:movieId", async (req, res) => {
   const movieId = req.params.movieId;
-  const sortType = req.query.sortType
+  const sortType = req.query.sortType;
   try {
     // find all comments for a specific movie(movieId) and include the user who made those comments.
-    const commentsArray = await prisma.comments.findMany({
+    const commentsArray = await prisma.comment.findMany({
       where: {
         movieId: movieId,
       },
@@ -178,13 +178,12 @@ app.get("/comments/:movieId", async (req, res) => {
         createdAt: "desc",
       },
     });
-    if (sortType){
-     const newArray = sortComment(commentsArray, sortType)
-     res.status(HttpStatus.OK).json(newArray);
-    }else{
-       res.status(HttpStatus.OK).json(commentsArray);
+    if (sortType) {
+      const newArray = sortComment(commentsArray, sortType);
+      res.status(HttpStatus.OK).json(newArray);
+    } else {
+      res.status(HttpStatus.OK).json(commentsArray);
     }
-   
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -192,14 +191,18 @@ app.get("/comments/:movieId", async (req, res) => {
   }
 });
 // increment upvote
-app.patch("/comments/:commentId/upvote", isAuthenticated,  async (req, res) => {
+app.patch("/comments/:commentId/upvote", isAuthenticated, async (req, res) => {
   const { commentId } = req.params;
   try {
-    const comment = await prisma.comments.findUnique({ where: { id: commentId } });
+    const comment = await prisma.comment.findUnique({
+      where: { id: commentId },
+    });
     if (!comment) {
-      return res.status(HttpStatus.NOT_FOUND).json({ message: "comment not found" });
+      return res
+        .status(HttpStatus.NOT_FOUND)
+        .json({ message: "comment not found" });
     }
-    const updateVote = await prisma.comments.update({
+    const updateVote = await prisma.comment.update({
       where: { id: commentId },
       data: {
         upVotes: {
@@ -210,38 +213,50 @@ app.patch("/comments/:commentId/upvote", isAuthenticated,  async (req, res) => {
     res.status(HttpStatus.OK).json({ success: true, data: updateVote });
   } catch (error) {
     console.error("Error updating comment:", error);
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: "failed to upvote" });
+    res
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "failed to upvote" });
   }
 });
 
 // increment downvote
-app.patch("/comments/:commentId/downvote", isAuthenticated,  async (req, res) => {
-  const { commentId } = req.params;
-  try {
-    const comment = await prisma.comments.findUnique({ where: { id: commentId } });
-    if (!comment) {
-      return res.status(HttpStatus.NOT_FOUND).json({ message: "comment not found" });
-    }
-    const downvote = await prisma.comments.update({
-      where: { id: commentId },
-      data: {
-        downVotes: {
-          increment: 1,
+app.patch(
+  "/comments/:commentId/downvote",
+  isAuthenticated,
+  async (req, res) => {
+    const { commentId } = req.params;
+    try {
+      const comment = await prisma.comment.findUnique({
+        where: { id: commentId },
+      });
+      if (!comment) {
+        return res
+          .status(HttpStatus.NOT_FOUND)
+          .json({ message: "comment not found" });
+      }
+      const downvote = await prisma.comment.update({
+        where: { id: commentId },
+        data: {
+          downVotes: {
+            increment: 1,
+          },
         },
-      },
-    });
-    res.status(HttpStatus.OK).json({ success: true, data: downvote });
-  } catch (error) {
-    console.error("Error updating comment:", error);
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: "failed to downvote" });
+      });
+      res.status(HttpStatus.OK).json({ success: true, data: downvote });
+    } catch (error) {
+      console.error("Error updating comment:", error);
+      res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: "failed to downvote" });
+    }
   }
-});
+);
 
 // post a comment
 app.post("/comment", isAuthenticated, async (req, res) => {
-  const { message, movieId,  } = req.body;
+  const { message, movieId } = req.body;
   try {
-    const newComment = await prisma.comments.create({
+    const newComment = await prisma.comment.create({
       data: {
         message,
         movieId,
@@ -255,7 +270,6 @@ app.post("/comment", isAuthenticated, async (req, res) => {
       .json({ message: "Failed to create comment" });
   }
 });
-
 
 // check for and get user info upon sign up/ login
 app.get("/me", (req, res) => {
