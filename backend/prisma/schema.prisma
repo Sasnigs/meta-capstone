@@ -19,7 +19,7 @@ model User {
   email     String     @unique
   password  String
   createdAt DateTime   @default(now())
-  comment   Comment[]
+  comments   Comment[]
   votes     Vote[]
 }
 
@@ -32,7 +32,7 @@ model Comment {
   createdAt DateTime @default(now())
   upVotes   Int      @default(0)
   downVotes Int      @default(0)
-  Vote      Vote[]
+  Votes      Vote[]
 }
 
 model Vote {
