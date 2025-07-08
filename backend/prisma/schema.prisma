@@ -20,15 +20,29 @@ model User {
   password  String
   createdAt DateTime   @default(now())
   comment   Comments[]
+  votes     Vote[]
 }
 
 model Comments {
   id        String   @id @default(uuid())
   message   String
-  userId    String   
+  userId    String
   user      User     @relation(fields: [userId], references: [id])
   movieId   String
   createdAt DateTime @default(now())
   upVotes   Int      @default(0)
   downVotes Int      @default(0)
+  Vote      Vote[]
+}
+
+model Vote {
+  id        String   @id @default(uuid())
+  userId    String
+  commentId String
+  isUpvote  Boolean
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  comment   Comments @relation(fields: [commentId], references: [id])
+
+  @@unique([userId, commentId])
 }
