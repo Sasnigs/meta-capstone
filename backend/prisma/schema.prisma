@@ -19,11 +19,11 @@ model User {
   email     String     @unique
   password  String
   createdAt DateTime   @default(now())
-  comment   Comments[]
+  comment   Comment[]
   votes     Vote[]
 }
 
-model Comments {
+model Comment {
   id        String   @id @default(uuid())
   message   String
   userId    String
@@ -42,7 +42,7 @@ model Vote {
   isUpvote  Boolean
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-  comment   Comments @relation(fields: [commentId], references: [id])
+  comment   Comment @relation(fields: [commentId], references: [id])
 
   @@unique([userId, commentId])
 }
