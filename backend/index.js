@@ -193,61 +193,91 @@ app.get("/comments/:movieId", async (req, res) => {
 // increment upvote
 app.patch("/comments/:commentId/upvote", isAuthenticated, async (req, res) => {
   const { commentId } = req.params;
+  const userId = req.session.userId;
   try {
-    const comment = await prisma.comment.findUnique({
-      where: { id: commentId },
-    });
-    if (!comment) {
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .json({ message: "comment not found" });
-    }
-    const updateVote = await prisma.comment.update({
-      where: { id: commentId },
-      data: {
-        upVotes: {
-          increment: 1,
-        },
+    const existingVote = await prisma.vote.findUnique({
+      where: {
+        userId_commentId: { userId, commentId },
       },
     });
-    res.status(HttpStatus.OK).json({ success: true, data: updateVote });
-  } catch (error) {
-    console.error("Error updating comment:", error);
+
+    if (!existingVote) {
+      await prisma.vote.create({
+        data: { userId, commentId, isUpvote: true },
+      });
+    } else if (existingVote.isUpvote) {
+      await prisma.vote.delete({
+        where: { userId_commentId: { userId, commentId } },
+      });
+    } else {
+      await prisma.vote.update({
+        where: { userId_commentId: { userId, commentId } },
+        data: { isUpvote: true },
+      });
+    }
+
+    const upCount = await prisma.vote.count({
+      where: { commentId, isUpvote: true },
+    });
+    const downCount = await prisma.vote.count({
+      where: { commentId, isUpvote: false },
+    });
+
+    const updatedComment = await prisma.comment.update({
+      where: { id: commentId },
+      data: { upVotes: upCount, downVotes: downCount },
+    });
+
+    res.status(HttpStatus.OK).json(updatedComment);
+  } catch (err) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "failed to upvote" });
+      .json({ message: "Upvote failed" });
   }
 });
 
 // increment downvote
-app.patch(
-  "/comments/:commentId/downvote",
-  isAuthenticated,
-  async (req, res) => {
+app.patch("/comments/:commentId/downvote", isAuthenticated, async (req, res) => {
     const { commentId } = req.params;
+    const userId = req.session.userId;
     try {
-      const comment = await prisma.comment.findUnique({
-        where: { id: commentId },
-      });
-      if (!comment) {
-        return res
-          .status(HttpStatus.NOT_FOUND)
-          .json({ message: "comment not found" });
-      }
-      const downvote = await prisma.comment.update({
-        where: { id: commentId },
-        data: {
-          downVotes: {
-            increment: 1,
-          },
+      const existingVote = await prisma.vote.findUnique({
+        where: {
+          userId_commentId: { userId, commentId },
         },
       });
-      res.status(HttpStatus.OK).json({ success: true, data: downvote });
-    } catch (error) {
-      console.error("Error updating comment:", error);
+
+      if (!existingVote) {
+        await prisma.vote.create({
+          data: { userId, commentId, isUpvote: false },
+        });
+      } else if (!existingVote.isUpvote) {
+        await prisma.vote.delete({
+          where: { userId_commentId: { userId, commentId } },
+        });
+      } else {
+        await prisma.vote.update({
+          where: { userId_commentId: { userId, commentId } },
+          data: { isUpvote: false },
+        });
+      }
+      const upCount = await prisma.vote.count({
+        where: { commentId, isUpvote: true },
+      });
+      const downCount = await prisma.vote.count({
+        where: { commentId, isUpvote: false },
+      });
+
+      const updatedComment = await prisma.comment.update({
+        where: { id: commentId },
+        data: { upVotes: upCount, downVotes: downCount },
+      });
+
+      res.status(HttpStatus.OK).json(updatedComment);
+    } catch (err) {
       res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: "failed to downvote" });
+        .json({ message: "Downvote failed" });
     }
   }
 );
