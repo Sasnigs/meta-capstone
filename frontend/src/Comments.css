@@ -29,7 +29,7 @@
   color: #fff;
   cursor: pointer;
   margin-top: 5px;
-   font-size: 20px;
+  font-size: 20px;
 }
 .text-area {
   width: 600px;
@@ -38,5 +38,25 @@
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  box-sizing: border-box; 
+  box-sizing: border-box;
+}
+.sort-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.sort-type {
+  display: flex;
+  gap: 5px;
+  background-color: #eee;
+  border: none;
+  color: #333;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  margin: 4px 6px;
+  cursor: pointer;
+  border-radius: 20px;
 }

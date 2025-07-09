@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import CommentCard from "./CommentCard";
 import { BASE_URL } from "./data/data";
+import { GiDiamondsSmile } from "react-icons/gi";
+import { AiFillDislike } from "react-icons/ai";
+import { MdOutlineAccessTimeFilled } from "react-icons/md";
+import { FaHourglassHalf } from "react-icons/fa6";
+import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import "./Comments.css";
 export default function Comments({ id }) {
   const [message, setMessage] = useState("");
@@ -8,9 +13,9 @@ export default function Comments({ id }) {
   let movieId = id;
   async function getComments() {
     try {
-      const res = await fetch(`${BASE_URL}/comments/${movieId}`,{
+      const res = await fetch(`${BASE_URL}/comments/${movieId}`, {
         method: "GET",
-       credentials: "include"
+        credentials: "include",
       });
       if (res.ok) {
         const data = await res.json();
@@ -58,7 +63,7 @@ export default function Comments({ id }) {
       if (res.ok) {
         getComments();
       }
-       // TODO
+      // TODO
     } catch (error) {}
   }
   async function downVotes(id) {
@@ -73,7 +78,7 @@ export default function Comments({ id }) {
       if (res.ok) {
         getComments();
       }
-       // TODO
+      // TODO
     } catch (error) {}
   }
 
@@ -95,6 +100,30 @@ export default function Comments({ id }) {
         </form>
       </div>
 
+      <div className="sort-bar">
+        <div className="sort-type">
+          <GiDiamondsSmile />
+          <span>Most upvoted</span>
+        </div>
+
+        <div className="sort-type">
+          <AiFillDislike />
+          <span>Least hated</span>
+        </div>
+
+        <div className="sort-type">
+          <MdOutlineAccessTimeFilled />
+          <span>Most recent</span>
+        </div>
+        <div className="sort-type">
+          <FaHourglassHalf />
+          <span>User tenure</span>
+        </div>
+        <div className="sort-type">
+          <BsFillBookmarkCheckFill />
+          <span>Net useful</span>
+        </div>
+      </div>
       <div className="comments-box">
         {allComments.length !== 0 ? (
           allComments.map((commentInfo) => (
