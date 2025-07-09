@@ -8,7 +8,10 @@ export default function Comments({ id }) {
   let movieId = id;
   async function getComments() {
     try {
-      const res = await fetch(`${BASE_URL}/comments/${movieId}`);
+      const res = await fetch(`${BASE_URL}/comments/${movieId}`,{
+        method: "GET",
+       credentials: "include"
+      });
       if (res.ok) {
         const data = await res.json();
         setAllComments(data);
