@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import CommentCard from "./CommentCard";
 import { BASE_URL } from "./data/data";
+import SortBar from "./SortBar";
 import "./Comments.css";
 export default function Comments({ id }) {
   const [message, setMessage] = useState("");
@@ -8,9 +9,9 @@ export default function Comments({ id }) {
   let movieId = id;
   async function getComments() {
     try {
-      const res = await fetch(`${BASE_URL}/comments/${movieId}`,{
+      const res = await fetch(`${BASE_URL}/comments/${movieId}`, {
         method: "GET",
-       credentials: "include"
+        credentials: "include",
       });
       if (res.ok) {
         const data = await res.json();
@@ -58,7 +59,7 @@ export default function Comments({ id }) {
       if (res.ok) {
         getComments();
       }
-       // TODO
+      // TODO
     } catch (error) {}
   }
   async function downVotes(id) {
@@ -73,7 +74,7 @@ export default function Comments({ id }) {
       if (res.ok) {
         getComments();
       }
-       // TODO
+      // TODO
     } catch (error) {}
   }
 
@@ -94,7 +95,7 @@ export default function Comments({ id }) {
           <button type="submit">Post</button>
         </form>
       </div>
-
+      <SortBar />
       <div className="comments-box">
         {allComments.length !== 0 ? (
           allComments.map((commentInfo) => (
