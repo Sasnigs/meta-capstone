@@ -165,29 +165,41 @@ function isAuthenticated(req, res, next) {
 app.get("/comments/:movieId", async (req, res) => {
   const movieId = req.params.movieId;
   const sortType = req.query.sortType;
+  const userId = req.session.userId;
   try {
-    // find all comments for a specific movie(movieId) and include the user who made those comments.
+    // get all comments for a movie
     const commentsArray = await prisma.comment.findMany({
-      where: {
-        movieId: movieId,
-      },
-      include: {
-        user: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
+      where: { movieId },
+      include: { user: true },
+      orderBy: { createdAt: "desc" },
     });
-    if (sortType) {
-      const newArray = sortComment(commentsArray, sortType);
-      res.status(HttpStatus.OK).json(newArray);
-    } else {
-      res.status(HttpStatus.OK).json(commentsArray);
+
+    let updatedComments = commentsArray;
+    // if user in session get all votes that matches the commentId from the comments above
+    if (userId) {
+      const userVotes = await prisma.vote.findMany({
+        where: {
+          userId,
+          commentId: { in: commentsArray.map((c) => c.id) },
+        },
+      });
+      // update each comment by adding userVote props if a commentId from userVotes array matches id in comments Array if no match give a null value
+      updatedComments = commentsArray.map((c) => {
+        const userVote = userVotes.find((v) => v.commentId === c.id);
+        return {
+          ...c,
+          userVote: userVote ? { isUpvote: userVote.isUpvote } : null,
+        };
+      });
     }
+    const modifiedComments = sortType
+      ? sortComment(updatedComments, sortType)
+      : updatedComments;
+    res.status(HttpStatus.OK).json(modifiedComments);
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Error fetching data" });
+      .json({ message: "Failed to fetch comments" });
   }
 });
 // increment upvote
@@ -237,7 +249,10 @@ app.patch("/comments/:commentId/upvote", isAuthenticated, async (req, res) => {
 });
 
 // increment downvote
-app.patch("/comments/:commentId/downvote", isAuthenticated, async (req, res) => {
+app.patch(
+  "/comments/:commentId/downvote",
+  isAuthenticated,
+  async (req, res) => {
     const { commentId } = req.params;
     const userId = req.session.userId;
     try {
