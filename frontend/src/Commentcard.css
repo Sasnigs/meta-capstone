@@ -54,3 +54,9 @@
   visibility: visible;
   opacity: 1;
 }
+.voted-up {
+  color: rgb(14, 252, 14);
+}
+.voted-down {
+  color: red;
+}

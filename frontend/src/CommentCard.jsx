@@ -2,6 +2,8 @@ import "./CommentCard.css";
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 
 export default function CommentCard({ commentInfo, upVotes, downVotes }) {
+  const isUpVote = commentInfo.userVote === true;
+  const isDownVote = commentInfo.userVote === false;
   return (
     <div>
       <div className="comment-cont">
@@ -28,11 +30,17 @@ export default function CommentCard({ commentInfo, upVotes, downVotes }) {
         </div>
         <div className="up-down-vote">
           <p>
-            <BiUpvote onClick={() => upVotes(commentInfo.id)} />
+            <BiUpvote
+              className={isUpVote ? "voted-up" : ""}
+              onClick={() => upVotes(commentInfo.id)}
+            />
             {commentInfo.upVotes}
           </p>
           <p>
-            <BiDownvote onClick={() => downVotes(commentInfo.id)} />
+            <BiDownvote
+              className={isDownVote ? "voted-down" : ""}
+              onClick={() => downVotes(commentInfo.id)}
+            />
             {commentInfo.downVotes}
           </p>
         </div>
