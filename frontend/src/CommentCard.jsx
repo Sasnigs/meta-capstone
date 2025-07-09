@@ -2,8 +2,8 @@ import "./CommentCard.css";
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 
 export default function CommentCard({ commentInfo, upVotes, downVotes }) {
-  const isUpVote = commentInfo?.userVote === true;
-  const isDownVote = commentInfo?.userVote === false;
+  const isUpVote = commentInfo.userVote === true;
+  const isDownVote = commentInfo.userVote === false;
   return (
     <div>
       <div className="comment-cont">
