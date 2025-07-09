@@ -180,15 +180,17 @@ app.get("/comments/:movieId", async (req, res) => {
       const userVotes = await prisma.vote.findMany({
         where: {
           userId,
-          commentId: { in: commentsArray.map((c) => c.id) },
+          commentId: { in: commentsArray.map((comment) => comment.id) },
         },
       });
       // update each comment by adding userVote props if a commentId from userVotes array matches id in comments Array if no match give a null value
-      updatedComments = commentsArray.map((c) => {
-        const userVote = userVotes.find((v) => v.commentId === c.id);
+      updatedComments = commentsArray.map((comment) => {
+        const userVote = userVotes.find(
+          (vote) => vote.commentId === comment.id
+        );
         return {
-          ...c,
-          userVote: userVote ? { isUpvote: userVote.isUpvote } : null,
+          ...comment,
+          userVote: userVote ? userVote.isUpvote : null,
         };
       });
     }
