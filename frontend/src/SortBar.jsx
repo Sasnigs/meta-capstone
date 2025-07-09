@@ -9,7 +9,7 @@ export default function SortBar() {
     <div className="sort-bar">
       <div className="sort-type">
         <GiDiamondsSmile />
-        <span>Most upvoted</span>
+        <span>Most loved</span>
       </div>
 
       <div className="sort-type">
