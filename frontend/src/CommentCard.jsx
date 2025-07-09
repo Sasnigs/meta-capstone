@@ -34,7 +34,7 @@ export default function CommentCard({ commentInfo, upVotes, downVotes }) {
               className={isUpVote ? "voted-up" : ""}
               onClick={() => upVotes(commentInfo.id)}
             />
-             {commentInfo.upVotes}
+            {commentInfo.upVotes}
           </p>
           <p>
             <BiDownvote
