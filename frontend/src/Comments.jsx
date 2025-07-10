@@ -25,7 +25,7 @@ export default function Comments({ id }) {
   }
   useEffect(() => {
     getComments();
-  }, []);
+  }, [sortVal]);
   async function createComment(e) {
     e.preventDefault();
     const formData = { message, movieId };
