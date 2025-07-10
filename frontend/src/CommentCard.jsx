@@ -1,4 +1,4 @@
-import "./CommentCard.css";
+import "./Commentcard.css";
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 
 export default function CommentCard({ commentInfo, upVotes, downVotes }) {
