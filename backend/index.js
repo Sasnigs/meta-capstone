@@ -29,7 +29,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      sameSite: None,
+      sameSite: "none",
       secure: true,
       maxAge: 1000 * 60 * 60 * 24,
     },
