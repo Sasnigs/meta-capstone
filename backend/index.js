@@ -14,14 +14,18 @@ const prisma = new PrismaClient();
 const saltRounds = 10;
 const PORT = process.env.PORT || 4500;
 const BASE_URL = "http://localhost:4500";
+const isProduction = process.env.NODE_ENV === "production";
 app.use(
   cors({
-    origin: "https://meta-capstone-frontend.onrender.com",
+    origin: [
+      "http://localhost:5173",
+      "https://meta-capstone-frontend.onrender.com",
+    ],
     credentials: true,
   })
 );
 app.use(express.json());
-
+app.set("trust proxy", 1);
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -29,8 +33,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      sameSite: "none",
-      secure: true,
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
       maxAge: 1000 * 60 * 60 * 24,
     },
   })
