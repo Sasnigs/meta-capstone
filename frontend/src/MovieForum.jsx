@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Comments from "./Comments"
 import "./MovieForum.css";
-import { getMovieById } from "../utils/OMDBUtils";
+import { getMovieById } from "../utils/omdbUtils";
 
 export default function MovieForum() {
   const { id } = useParams();
