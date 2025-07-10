@@ -1,4 +1,4 @@
-import "./MovieCard.css";
+import "./Moviecard.css";
 
 export default function MovieCard({ movie }) {
   return (
