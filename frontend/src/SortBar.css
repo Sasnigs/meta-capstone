@@ -7,14 +7,23 @@
 }
 .sort-type {
   display: flex;
+  align-items: center;
   gap: 5px;
   background-color: #eee;
   border: none;
   color: #333;
   padding: 8px 16px;
   text-align: center;
-  text-decoration: none;
   margin: 4px 6px;
   cursor: pointer;
   border-radius: 20px;
+  transition: all 0.3s ease;
+}
+.sort-type:hover {
+  background-color: #007bff;
+  color: white;
+}
+.active-sort {
+  background-color: #007bff;
+  color: white;
 }
