@@ -6,7 +6,7 @@ import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import "./SortBar.css";
 
 export default function SortBar({ setSortVal }) {
-  const SORT_OBJ = {
+  const SORT_TYPE = {
     MOST_LOVED: "most_loved",
     LEAST_HATED: "least_hated",
     MOST_RECENT: "most_recent",
@@ -24,7 +24,7 @@ export default function SortBar({ setSortVal }) {
     <div className="sort-bar">
       <div
         className="sort-type"
-        onClick={() => changeSort(SORT_OBJ.MOST_LOVED)}
+        onClick={() => changeSort(SORT_TYPE.MOST_LOVED)}
       >
         <GiDiamondsSmile />
         <span>Most upvoted</span>
@@ -32,7 +32,7 @@ export default function SortBar({ setSortVal }) {
 
       <div
         className="sort-type"
-        onClick={() => changeSort(SORT_OBJ.LEAST_HATED)}
+        onClick={() => changeSort(SORT_TYPE.LEAST_HATED)}
       >
         <AiFillDislike />
         <span>Least hated</span>
@@ -40,7 +40,7 @@ export default function SortBar({ setSortVal }) {
 
       <div
         className="sort-type"
-        onClick={() => changeSort(SORT_OBJ.MOST_RECENT)}
+        onClick={() => changeSort(SORT_TYPE.MOST_RECENT)}
       >
         <MdOutlineAccessTimeFilled />
         <span>Most recent</span>
@@ -48,7 +48,7 @@ export default function SortBar({ setSortVal }) {
 
       <div
         className="sort-type"
-        onClick={() => changeSort(SORT_OBJ.OLDEST_USER)}
+        onClick={() => changeSort(SORT_TYPE.OLDEST_USER)}
       >
         <FaHourglassHalf />
         <span>User tenure</span>
@@ -56,7 +56,7 @@ export default function SortBar({ setSortVal }) {
 
       <div
         className="sort-type"
-        onClick={() => changeSort(SORT_OBJ.NET_USEFUL)}
+        onClick={() => changeSort(SORT_TYPE.NET_USEFUL)}
       >
         <BsFillBookmarkCheckFill />
         <span>Net useful</span>
