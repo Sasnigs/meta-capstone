@@ -6,10 +6,11 @@ import "./Comments.css";
 export default function Comments({ id }) {
   const [message, setMessage] = useState("");
   const [allComments, setAllComments] = useState([]);
+  const [sortVal, setSortVal] = useState(null)
   let movieId = id;
   async function getComments() {
     try {
-      const res = await fetch(`${BASE_URL}/comments/${movieId}`, {
+      const res = await fetch(`${BASE_URL}/comments/${movieId}?sortType=${sortVal}`, {
         method: "GET",
         credentials: "include",
       });
@@ -24,7 +25,7 @@ export default function Comments({ id }) {
   }
   useEffect(() => {
     getComments();
-  }, []);
+  }, [sortVal]);
   async function createComment(e) {
     e.preventDefault();
     const formData = { message, movieId };
@@ -95,7 +96,7 @@ export default function Comments({ id }) {
           <button type="submit">Post</button>
         </form>
       </div>
-      <SortBar />
+      <SortBar setSortVal={setSortVal} />
       <div className="comments-box">
         {allComments.length !== 0 ? (
           allComments.map((commentInfo) => (
