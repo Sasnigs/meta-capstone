@@ -4,6 +4,7 @@ import {
   MostLoved,
   NetUseful,
   OldestUser,
+  Controversial,
 } from "./commentSort.js";
 
 const SORT_TYPE = {
@@ -25,27 +26,27 @@ export function sortComment(array, sortType) {
 
     case SORT_TYPE.LEAST_HATED:
       sorter = new LeastHated();
-       break;
+      break;
 
     case SORT_TYPE.MOST_RECENT:
       sorter = new MostRecent();
-       break;
+      break;
 
     case SORT_TYPE.OLDEST_USER:
       sorter = new OldestUser();
-       break;
+      break;
 
     case SORT_TYPE.NET_USEFUL:
       sorter = new NetUseful();
-       break;
+      break;
 
     case SORT_TYPE.TRENDING:
-    // TODO: implement trending sort logic
-     break;
+      // TODO: implement trending sort logic
+      break;
 
     case SORT_TYPE.CONTROVERSIAL:
-    // TODO: implement controversial logic
-     break;
+      sorter = new Controversial();
+      break;
   }
   return sorter ? sorter.sort(array) : array;
 }

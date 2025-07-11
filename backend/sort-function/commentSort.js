@@ -41,5 +41,22 @@ class NetUseful extends CommentSorter {
     );
   }
 }
+class Controversial extends CommentSorter {
+  sort(comments) {
+    comments.forEach((comment) => {
+      comment.controversial = Math.abs(
+        1 - comment.upVotes / (comment.downVotes || 1)
+      );
+    });
+    return comments.sort((a, b) => b.controversial - a.controversial);
+  }
+}
 
-export { MostRecent, MostLoved, LeastHated, OldestUser, NetUseful };
+export {
+  MostRecent,
+  MostLoved,
+  LeastHated,
+  OldestUser,
+  NetUseful,
+  Controversial,
+};
