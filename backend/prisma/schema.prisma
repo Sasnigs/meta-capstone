@@ -14,12 +14,12 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(uuid())
-  username  String     @unique
-  email     String     @unique
+  id        String    @id @default(uuid())
+  username  String    @unique
+  email     String    @unique
   password  String
-  createdAt DateTime   @default(now())
-  comments   Comment[]
+  createdAt DateTime  @default(now())
+  comments  Comment[]
   votes     Vote[]
 }
 
@@ -32,7 +32,7 @@ model Comment {
   createdAt DateTime @default(now())
   upVotes   Int      @default(0)
   downVotes Int      @default(0)
-  votes      Vote[]
+  votes     Vote[]
 }
 
 model Vote {
@@ -42,7 +42,13 @@ model Vote {
   isUpvote  Boolean
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-  comment   Comment @relation(fields: [commentId], references: [id])
+  comment   Comment  @relation(fields: [commentId], references: [id])
 
   @@unique([userId, commentId])
+}
+
+model Word {
+  id         String   @id @default(uuid())
+  word       String   @unique
+  commentIds String[] 
 }
