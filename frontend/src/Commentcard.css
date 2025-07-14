@@ -60,3 +60,6 @@
 .voted-down {
   color: red;
 }
+.up-down-vote p{
+  display: flex;
+}

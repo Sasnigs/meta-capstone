@@ -1,9 +1,9 @@
-import { GiDiamondsSmile } from "react-icons/gi";
+import { useState } from "react";
+import { GiDiamondsSmile, GiCrossedSwords } from "react-icons/gi";
 import { AiFillDislike } from "react-icons/ai";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import { FaHourglassHalf } from "react-icons/fa6";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
-import { GiCrossedSwords } from "react-icons/gi";
 import "./SortBar.css";
 
 export default function SortBar({ setSortVal }) {
@@ -17,14 +17,18 @@ export default function SortBar({ setSortVal }) {
     NET_USEFUL: "net_useful",
   };
 
+  const [selectedSort, setSelectedSort] = useState(null);
   const changeSort = (sortType) => {
     setSortVal(sortType);
+    setSelectedSort(sortType);
   };
-
+  const sortClass = (type) => {
+    return selectedSort === type ? "active-sort" : "";
+  };
   return (
     <div className="sort-bar">
       <div
-        className="sort-type"
+        className={`sort-type ${sortClass(SORT_TYPE.MOST_LOVED)}`}
         onClick={() => changeSort(SORT_TYPE.MOST_LOVED)}
       >
         <GiDiamondsSmile />
@@ -32,7 +36,7 @@ export default function SortBar({ setSortVal }) {
       </div>
 
       <div
-        className="sort-type"
+        className={`sort-type ${sortClass(SORT_TYPE.LEAST_HATED)}`}
         onClick={() => changeSort(SORT_TYPE.LEAST_HATED)}
       >
         <AiFillDislike />
@@ -40,7 +44,7 @@ export default function SortBar({ setSortVal }) {
       </div>
 
       <div
-        className="sort-type"
+         className={`sort-type ${sortClass(SORT_TYPE.MOST_RECENT)}`}
         onClick={() => changeSort(SORT_TYPE.MOST_RECENT)}
       >
         <MdOutlineAccessTimeFilled />
@@ -48,7 +52,7 @@ export default function SortBar({ setSortVal }) {
       </div>
 
       <div
-        className="sort-type"
+         className={`sort-type ${sortClass(SORT_TYPE.OLDEST_USER)}`}
         onClick={() => changeSort(SORT_TYPE.OLDEST_USER)}
       >
         <FaHourglassHalf />
@@ -56,7 +60,7 @@ export default function SortBar({ setSortVal }) {
       </div>
 
       <div
-        className="sort-type"
+         className={`sort-type ${sortClass(SORT_TYPE.NET_USEFUL)}`}
         onClick={() => changeSort(SORT_TYPE.NET_USEFUL)}
       >
         <BsFillBookmarkCheckFill />
@@ -64,7 +68,7 @@ export default function SortBar({ setSortVal }) {
       </div>
 
       <div
-        className="sort-type"
+          className={`sort-type ${sortClass(SORT_TYPE.CONTROVERSIAL)}`}
         onClick={() => changeSort(SORT_TYPE.CONTROVERSIAL)}
       >
         <GiCrossedSwords />
