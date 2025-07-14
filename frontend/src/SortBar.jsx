@@ -22,13 +22,13 @@ export default function SortBar({ setSortVal }) {
     setSortVal(sortType);
     setSelectedSort(sortType);
   };
-
+  const sortClass = (type) => {
+    return selectedSort === type ? "active-sort" : "";
+  };
   return (
     <div className="sort-bar">
       <div
-        className={`sort-type ${
-          selectedSort === SORT_TYPE.MOST_LOVED ? "active-sort" : ""
-        }`}
+        className={`sort-type ${sortClass(SORT_TYPE.MOST_LOVED)}`}
         onClick={() => changeSort(SORT_TYPE.MOST_LOVED)}
       >
         <GiDiamondsSmile />
@@ -36,9 +36,7 @@ export default function SortBar({ setSortVal }) {
       </div>
 
       <div
-        className={`sort-type ${
-          selectedSort === SORT_TYPE.LEAST_HATED ? "active-sort" : ""
-        }`}
+        className={`sort-type ${sortClass(SORT_TYPE.LEAST_HATED)}`}
         onClick={() => changeSort(SORT_TYPE.LEAST_HATED)}
       >
         <AiFillDislike />
@@ -46,9 +44,7 @@ export default function SortBar({ setSortVal }) {
       </div>
 
       <div
-        className={`sort-type ${
-          selectedSort === SORT_TYPE.MOST_RECENT ? "active-sort" : ""
-        }`}
+         className={`sort-type ${sortClass(SORT_TYPE.MOST_RECENT)}`}
         onClick={() => changeSort(SORT_TYPE.MOST_RECENT)}
       >
         <MdOutlineAccessTimeFilled />
@@ -56,9 +52,7 @@ export default function SortBar({ setSortVal }) {
       </div>
 
       <div
-        className={`sort-type ${
-          selectedSort === SORT_TYPE.OLDEST_USER ? "active-sort" : ""
-        }`}
+         className={`sort-type ${sortClass(SORT_TYPE.OLDEST_USER)}`}
         onClick={() => changeSort(SORT_TYPE.OLDEST_USER)}
       >
         <FaHourglassHalf />
@@ -66,9 +60,7 @@ export default function SortBar({ setSortVal }) {
       </div>
 
       <div
-        className={`sort-type ${
-          selectedSort === SORT_TYPE.NET_USEFUL ? "active-sort" : ""
-        }`}
+         className={`sort-type ${sortClass(SORT_TYPE.NET_USEFUL)}`}
         onClick={() => changeSort(SORT_TYPE.NET_USEFUL)}
       >
         <BsFillBookmarkCheckFill />
@@ -76,9 +68,7 @@ export default function SortBar({ setSortVal }) {
       </div>
 
       <div
-        className={`sort-type ${
-          selectedSort === SORT_TYPE.CONTROVERSIAL ? "active-sort" : ""
-        }`}
+          className={`sort-type ${sortClass(SORT_TYPE.CONTROVERSIAL)}`}
         onClick={() => changeSort(SORT_TYPE.CONTROVERSIAL)}
       >
         <GiCrossedSwords />
