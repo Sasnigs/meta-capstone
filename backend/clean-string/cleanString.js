@@ -11,6 +11,7 @@ export function removePunctuation(str) {
 
 function checkPunctuation(char) {
     const punctuation = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+    // todo: implement set for punctuations for fast lookups and also account for more ascii chars.
     return punctuation.includes(char);
 }
 
