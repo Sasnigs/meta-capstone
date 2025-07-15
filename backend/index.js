@@ -7,6 +7,7 @@ import { OAuth2Client } from "google-auth-library";
 import { getUserData } from "./auth-function/getUserData.js";
 import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
+import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
 
 dotenv.config();
 const app = express();
@@ -40,17 +41,6 @@ app.use(
   })
 );
 const wordMap = {};
-async function populateWordMap() {
-  try {
-    const allWords = await prisma.word.findMany();
-
-    for (const entry of allWords) {
-      wordMap[entry.word] = [...entry.commentIds];
-    }
-  } catch (error) {
-    // TODO:
-  }
-}
 
 const HttpStatus = {
   OK: 200,
@@ -381,5 +371,5 @@ app.get("/me", (req, res) => {
   }
 });
 
-await populateWordMap();
+await populateWordMap(wordMap);;
 app.listen(PORT, console.log(`Server running on http://localhost:${PORT}`));
