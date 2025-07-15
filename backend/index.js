@@ -8,6 +8,7 @@ import { getUserData } from "./auth-function/getUserData.js";
 import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
+import { removePunctuation } from "./clean-string/cleanString.js";
 
 dotenv.config();
 const app = express();
@@ -319,8 +320,9 @@ app.post("/comment", isAuthenticated, async (req, res) => {
       },
     });
 
-    // case-insensitive, split, remove punctuation and  empty strings and 
-    const words = message.toLowerCase().split(/\W+/).filter(Boolean);
+    // case-insensitive, split, remove punctuation and  empty strings and
+    const cleanedWord = removePunctuation(message);
+    const words = cleanedWord.toLowerCase().split(" ").filter(Boolean);
 
     // get unique words
     const uniqueWords = new Set(words);
@@ -346,7 +348,7 @@ app.post("/comment", isAuthenticated, async (req, res) => {
         });
       }
       // Update in-memory hashmap
-       if (!wordMap[word]) {
+      if (!wordMap[word]) {
         wordMap[word] = [newComment.id];
       } else {
         wordMap[word].push(newComment.id);
@@ -371,5 +373,5 @@ app.get("/me", (req, res) => {
   }
 });
 
-await populateWordMap(wordMap);;
+await populateWordMap(wordMap);
 app.listen(PORT, console.log(`Server running on http://localhost:${PORT}`));
