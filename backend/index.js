@@ -361,7 +361,7 @@ app.post("/comment", isAuthenticated, async (req, res) => {
         wordMap[word].push(newComment.id);
       }
     }
-    res.status(HttpStatus.OK).json(wordMap);
+    res.status(HttpStatus.OK).json(newComment);
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
