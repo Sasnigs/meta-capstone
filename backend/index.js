@@ -48,6 +48,7 @@ async function populateWordMap() {
       wordMap[entry.word] = [...entry.commentIds];
     }
   } catch (error) {
+    // TODO:
   }
 }
 
