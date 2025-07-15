@@ -7,6 +7,8 @@ import { OAuth2Client } from "google-auth-library";
 import { getUserData } from "./auth-function/getUserData.js";
 import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
+import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
+import { removePunctuation } from "./clean-string/cleanString.js";
 
 dotenv.config();
 const app = express();
@@ -39,6 +41,7 @@ app.use(
     },
   })
 );
+const wordMap = {};
 
 const HttpStatus = {
   OK: 200,
@@ -316,6 +319,41 @@ app.post("/comment", isAuthenticated, async (req, res) => {
         userId: req.session.userId,
       },
     });
+
+    // case-insensitive, split, remove punctuation and  empty strings and
+    const cleanedWord = removePunctuation(message);
+    const words = cleanedWord.toLowerCase().split(" ").filter(Boolean);
+
+    // get unique words
+    const uniqueWords = new Set(words);
+
+    // Loop through each word and update both DB + in-memory
+    for (const word of uniqueWords) {
+      // Update Word table
+      const existing = await prisma.word.findUnique({ where: { word } });
+
+      if (existing) {
+        await prisma.word.update({
+          where: { word },
+          data: {
+            commentIds: { push: newComment.id },
+          },
+        });
+      } else {
+        await prisma.word.create({
+          data: {
+            word,
+            commentIds: [newComment.id],
+          },
+        });
+      }
+      // Update in-memory hashmap
+      if (!wordMap[word]) {
+        wordMap[word] = [newComment.id];
+      } else {
+        wordMap[word].push(newComment.id);
+      }
+    }
     res.status(HttpStatus.OK).json(newComment);
   } catch (error) {
     res
@@ -335,4 +373,5 @@ app.get("/me", (req, res) => {
   }
 });
 
+await populateWordMap(wordMap);
 app.listen(PORT, console.log(`Server running on http://localhost:${PORT}`));
