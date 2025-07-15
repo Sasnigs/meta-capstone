@@ -39,6 +39,17 @@ app.use(
     },
   })
 );
+const wordMap = {};
+async function populateWordMap() {
+  try {
+    const allWords = await prisma.word.findMany();
+
+    for (const entry of allWords) {
+      wordMap[entry.word] = [...entry.commentIds];
+    }
+  } catch (error) {
+  }
+}
 
 const HttpStatus = {
   OK: 200,
@@ -316,7 +327,41 @@ app.post("/comment", isAuthenticated, async (req, res) => {
         userId: req.session.userId,
       },
     });
-    res.status(HttpStatus.OK).json(newComment);
+
+    // case-insensitive, split, remove punctuation and  empty strings and 
+    const words = message.toLowerCase().split(/\W+/).filter(Boolean);
+
+    // get unique words
+    const uniqueWords = new Set(words);
+
+    // Loop through each word and update both DB + in-memory
+    for (const word of uniqueWords) {
+      // Update Word table
+      const existing = await prisma.word.findUnique({ where: { word } });
+
+      if (existing) {
+        await prisma.word.update({
+          where: { word },
+          data: {
+            commentIds: { push: newComment.id },
+          },
+        });
+      } else {
+        await prisma.word.create({
+          data: {
+            word,
+            commentIds: [newComment.id],
+          },
+        });
+      }
+      // Update in-memory hashmap
+       if (!wordMap[word]) {
+        wordMap[word] = [newComment.id];
+      } else {
+        wordMap[word].push(newComment.id);
+      }
+    }
+    res.status(HttpStatus.OK).json(wordMap);
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -335,4 +380,5 @@ app.get("/me", (req, res) => {
   }
 });
 
+await populateWordMap();
 app.listen(PORT, console.log(`Server running on http://localhost:${PORT}`));
