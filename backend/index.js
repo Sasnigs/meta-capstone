@@ -394,6 +394,7 @@ app.get("/search", async (req, res) => {
         id: true,
         message: true,
         movieId: true,
+        createdAt: true,
       },
     });
 
