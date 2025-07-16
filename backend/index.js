@@ -362,6 +362,69 @@ app.post("/comment", isAuthenticated, async (req, res) => {
   }
 });
 
+// TODO: optimise solution for better performance
+app.get("/search", async (req, res) => {
+  try {
+    const { phrase } = req.query;
+    // case-insensitive, split, remove punctuation and  empty strings
+    const cleanedPhrase = removePunctuation(phrase);
+    const words = cleanedPhrase.toLowerCase().split(" ").filter(Boolean);
+
+    if (words.length === 0) {
+      return res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ message: "No valid words found in phrase." });
+    }
+
+    // Collect matching commentId
+    const commentIdSet = new Set();
+
+    for (const word of words) {
+      const matches = wordMap[word] || [];
+      for (const id of matches) {
+        commentIdSet.add(id);
+      }
+    }
+    // Fetch full comment info from DB
+    const results = await prisma.comment.findMany({
+      where: {
+        id: { in: Array.from(commentIdSet) },
+      },
+      select: {
+        id: true,
+        message: true,
+        movieId: true,
+        upVotes: true,
+      },
+    });
+
+    // Adding score property to each comment to determine which has all query words in each comment and sort by that prop.
+    const scoredResults = results.map((comment) => {
+      const lowerCasedCommentMessage = comment.message.toLowerCase();
+      let score = 0;
+
+      for (const word of words) {
+        if (lowerCasedCommentMessage.includes(word)) {
+          score++;
+        }
+      }
+      return { ...comment, score };
+    });
+    // Sort first by score rank then for instance where score is equal sort by createdAt as tie breaker
+    scoredResults.sort((a, b) => {
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+      return (b.upVotes) - (a.upVotes);
+    });
+
+    res.status(HttpStatus.OK).json(scoredResults);
+  } catch (error) {
+    res
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Error with fetching comment" });
+  }
+});
 // check for and get user info upon sign up/ login
 app.get("/me", (req, res) => {
   if (req.session.userId) {
