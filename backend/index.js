@@ -9,6 +9,9 @@ import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
 import { removePunctuation } from "./clean-string/cleanString.js";
+import { fetchCommentAndSort } from "./search-function/cleanSort.js";
+import uniqueId from "./search-function/uniqueId.js";
+import frequencyId from "./search-function/frequencyId.js";
 
 dotenv.config();
 const app = express();
@@ -377,74 +380,19 @@ app.get("/search", async (req, res) => {
     }
 
     // Collect matching commentId
-    const commentIdSet = new Set();
+    const commentIdSet = uniqueId(words, wordMap)
 
-    for (const word of words) {
-      const matches = wordMap[word] || [];
-      for (const id of matches) {
-        commentIdSet.add(id);
-      }
-    }
-    const setMap = {};
-    for (const id of commentIdSet) {
-      let count = 0;
-      for (const word of words) {
-        const matches = wordMap[word];
-        if (matches.includes(id)) {
-          count++;
-        }
-      }
-      setMap[id] = count;
-    }
-    const entrieSetMap = Object.entries(setMap)
-    entrieSetMap.sort((a, b) => b[1] - a[1])
-    const hopeResult = []
-    for( const comment of entrieSetMap){
-      const results = await prisma.comment.findUnique({
-      where: {
-        id: comment[0] ,
-      },
-      select: {
-        id: true,
-        message: true,
-        movieId: true,
-      },
-    });
-    hopeResult.push(results)
-    }
-    // Fetch full comment info from DB
-    const results = await prisma.comment.findMany({
-      where: {
-        id: { in: Array.from(commentIdSet) },
-      },
-      select: {
-        id: true,
-        message: true,
-        movieId: true,
-      },
-    });
-
-    // Adding score property to each comment to determine which has all query words in each comment and sort by that prop.
-    const scoredResults = results.map((comment) => {
-      const lowerCasedCommentMessage = comment.message.toLowerCase();
-      let score = 0;
-
-      for (const word of words) {
-        if (lowerCasedCommentMessage.includes(word)) {
-          score++;
-        }
-      }
-      return { ...comment, score };
-    });
-    // Sort first by score rank then for instance where score is equal sort by createdAt as tie breaker
-    scoredResults.sort((a, b) => {
-      if (b.score !== a.score) {
-        return b.score - a.score;
-      }
-      return new Date(b.createdAt) - new Date(a.createdAt);
-    });
-
-    res.status(HttpStatus.OK).json(scoredResults);
+    // object to store commentId occurence in the array of commentId 
+    const setMap = frequencyId(words, wordMap, commentIdSet);
+   
+    // convert object to array to maintain order after sorting
+    const entrieSetMap = Object.entries(setMap);
+    entrieSetMap.sort((a, b) => b[1] - a[1]);
+    const finalResult = []; 
+    
+   const result = await fetchCommentAndSort(finalResult, entrieSetMap)
+   
+    res.status(HttpStatus.OK).json(result);
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
