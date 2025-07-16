@@ -394,7 +394,7 @@ app.get("/search", async (req, res) => {
         id: true,
         message: true,
         movieId: true,
-        createdAt: true,
+        upVotes: true,
       },
     });
 
@@ -415,7 +415,7 @@ app.get("/search", async (req, res) => {
       if (b.score !== a.score) {
         return b.score - a.score;
       }
-      return new Date(b.createdAt) - new Date(a.createdAt);
+      return (b.upVotes) - (a.upVotes);
     });
 
     res.status(HttpStatus.OK).json(scoredResults);
