@@ -362,6 +362,7 @@ app.post("/comment", isAuthenticated, async (req, res) => {
   }
 });
 
+// TODO: optimise solution for better performance
 app.get("/search", async (req, res) => {
   try {
     const { phrase } = req.query;
