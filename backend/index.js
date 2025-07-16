@@ -396,7 +396,27 @@ app.get("/search", async (req, res) => {
       },
     });
 
-    res.status(HttpStatus.OK).json(results);
+    // Adding score property to each comment to determine which has all query words in each comment and sort by that prop.
+    const scoredResults = results.map((comment) => {
+      const lowerCasedCommentMessage = comment.message.toLowerCase();
+      let score = 0;
+
+      for (const word of words) {
+        if (lowerCasedCommentMessage.includes(word)) {
+          score++;
+        }
+      }
+      return { ...comment, score };
+    });
+    // Sort first by score rank then for instance where score is equal sort by createdAt as tie breaker
+    scoredResults.sort((a, b) => {
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
+    res.status(HttpStatus.OK).json(scoredResults);
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
