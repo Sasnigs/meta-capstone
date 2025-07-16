@@ -362,6 +362,47 @@ app.post("/comment", isAuthenticated, async (req, res) => {
   }
 });
 
+app.get("/search", async (req, res) => {
+  try {
+    const { phrase } = req.query;
+    // case-insensitive, split, remove punctuation and  empty strings
+    const cleanedPhrase = removePunctuation(phrase);
+    const words = cleanedPhrase.toLowerCase().split(" ").filter(Boolean);
+
+    if (words.length === 0) {
+      return res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ message: "No valid words found in phrase." });
+    }
+
+    // Collect matching commentId
+    const commentIdSet = new Set();
+
+    for (const word of words) {
+      const matches = wordMap[word] || [];
+      for (const id of matches) {
+        commentIdSet.add(id);
+      }
+    }
+    // Fetch full comment info from DB
+    const results = await prisma.comment.findMany({
+      where: {
+        id: { in: Array.from(commentIdSet) },
+      },
+      select: {
+        id: true,
+        message: true,
+        movieId: true,
+      },
+    });
+
+    res.status(HttpStatus.OK).json(results);
+  } catch (error) {
+    res
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: "Error with fetching comment" });
+  }
+});
 // check for and get user info upon sign up/ login
 app.get("/me", (req, res) => {
   if (req.session.userId) {
