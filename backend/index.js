@@ -385,6 +385,33 @@ app.get("/search", async (req, res) => {
         commentIdSet.add(id);
       }
     }
+    const setMap = {};
+    for (const id of commentIdSet) {
+      let count = 0;
+      for (const word of words) {
+        const matches = wordMap[word];
+        if (matches.includes(id)) {
+          count++;
+        }
+      }
+      setMap[id] = count;
+    }
+    const entrieSetMap = Object.entries(setMap)
+    entrieSetMap.sort((a, b) => b[1] - a[1])
+    const hopeResult = []
+    for( const comment of entrieSetMap){
+      const results = await prisma.comment.findUnique({
+      where: {
+        id: comment[0] ,
+      },
+      select: {
+        id: true,
+        message: true,
+        movieId: true,
+      },
+    });
+    hopeResult.push(results)
+    }
     // Fetch full comment info from DB
     const results = await prisma.comment.findMany({
       where: {
