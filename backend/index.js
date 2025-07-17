@@ -9,6 +9,7 @@ import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
 import { removePunctuation } from "./clean-string/cleanString.js";
+import { fetchComment, getUniqueCommentIDs, createCommentIDsFrequency } from "./utils/utils.js";
 
 dotenv.config();
 const app = express();
@@ -362,7 +363,6 @@ app.post("/comment", isAuthenticated, async (req, res) => {
   }
 });
 
-// TODO: optimise solution for better performance
 app.get("/search", async (req, res) => {
   try {
     const { phrase } = req.query;
@@ -377,48 +377,18 @@ app.get("/search", async (req, res) => {
     }
 
     // Collect matching commentId
-    const commentIdSet = new Set();
+    const commentIdSet = getUniqueCommentIDs(words, wordMap);
 
-    for (const word of words) {
-      const matches = wordMap[word] || [];
-      for (const id of matches) {
-        commentIdSet.add(id);
-      }
-    }
-    // Fetch full comment info from DB
-    const results = await prisma.comment.findMany({
-      where: {
-        id: { in: Array.from(commentIdSet) },
-      },
-      select: {
-        id: true,
-        message: true,
-        movieId: true,
-        upVotes: true,
-      },
-    });
 
-    // Adding score property to each comment to determine which has all query words in each comment and sort by that prop.
-    const scoredResults = results.map((comment) => {
-      const lowerCasedCommentMessage = comment.message.toLowerCase();
-      let score = 0;
+    // object to store commentId occurence in the array of commentId
+    const commentIdMap = createCommentIDsFrequency(words, wordMap, commentIdSet);
 
-      for (const word of words) {
-        if (lowerCasedCommentMessage.includes(word)) {
-          score++;
-        }
-      }
-      return { ...comment, score };
-    });
-    // Sort first by score rank then for instance where score is equal sort by createdAt as tie breaker
-    scoredResults.sort((a, b) => {
-      if (b.score !== a.score) {
-        return b.score - a.score;
-      }
-      return (b.upVotes) - (a.upVotes);
-    });
+    // convert object to array to maintain order after sorting
+    const commentIdArray = Object.entries(commentIdMap);
+    commentIdArray.sort((a, b) => b[1] - a[1]);
+    const result = await fetchComment(commentIdArray);
 
-    res.status(HttpStatus.OK).json(scoredResults);
+    res.status(HttpStatus.OK).json(result);
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
