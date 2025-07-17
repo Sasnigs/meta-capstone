@@ -379,6 +379,7 @@ app.get("/search", async (req, res) => {
     // Collect matching commentId
     const commentIdSet = getUniqueCommentIDs(words, wordMap);
 
+
     // object to store commentId occurence in the array of commentId
     const commentIdMap = createCommentIDsFrequency(words, wordMap, commentIdSet);
 
