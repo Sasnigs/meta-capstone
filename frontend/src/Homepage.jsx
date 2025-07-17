@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function Homepage() {
   const [moviesToshow, setMoviesToShow] = useState([]);
   const [isSearchingComment, setIsSearchingComment] = useState(false); // false calls movie api/ true calls search endpoint from server
-  const [commentsToshow, setCommentsToShow] = useState([]); // TODO: State to save comments result from server
+  const [commentsToShow, setCommentsToShow] = useState([]); // TODO: State to save comments result from server
   return (
     <div>
       <Search
@@ -17,7 +17,7 @@ export default function Homepage() {
       />
       {isSearchingComment ? (
         // TODO
-        <CommentList commentsToshow={commentsToshow} />
+        <CommentList commentsToShow={commentsToShow} />
       ) : (
         <MovieList moviesToshow={moviesToshow} />
       )}

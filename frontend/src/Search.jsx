@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Search.css";
 import { getMoviesByTitle } from "../utils/omdbUtils.js";
+import { BASE_URL } from "./data/data.js";
 
 export default function Search({
   setMoviesToShow,
@@ -12,11 +13,17 @@ export default function Search({
   async function search(e) {
     e.preventDefault();
     try {
-      const movies = await getMoviesByTitle(searchValue);
-      setMoviesToShow(movies);
+      if (!isSearchingComment) {
+        const movies = await getMoviesByTitle(searchValue);
+        setMoviesToShow(movies);
+      } else {
+        const res = await fetch(`${BASE_URL}/search?phrase=${searchValue}`);
+        const data = await res.json();
+        setCommentsToShow(data);
+      }
       setSearchValue("");
     } catch (error) {
-      console.error("Error fetching movies");
+      console.error("Error fetching search results:", error);
     }
   }
 
