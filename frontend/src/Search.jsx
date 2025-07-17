@@ -5,8 +5,8 @@ import { getMoviesByTitle } from "../utils/omdbUtils.js";
 export default function Search({
   setMoviesToShow,
   setCommentsToShow,
-  searchState,
-  setSearchState,
+  isSearchChoice,
+  setIsSearchChoice,
 }) {
   const [searchValue, setSearchValue] = useState("");
   async function search(e) {
@@ -29,27 +29,27 @@ export default function Search({
           name="query"
           onChange={(e) => setSearchValue(e.target.value)}
           required
-          placeholder={searchState ? "Search comments 💬" : "Search movies 🎬"}
+          placeholder={isSearchChoice ? "Search comments 💬" : "Search movies 🎬"}
         />
         <button type="submit">Search</button>
       </form>
       <div className="toggle-wrapper">
         <div className="toggle-container">
           <button
-            className={`toggle-btn ${!searchState ? "active" : ""}`}
-            onClick={() => setSearchState(false)}
+            className={`toggle-btn ${!isSearchChoice ? "active" : ""}`}
+            onClick={() => setIsSearchChoice(false)}
           >
             🎬 Movies
           </button>
           <button
-            className={`toggle-btn ${searchState ? "active" : ""}`}
-            onClick={() => setSearchState(true)}
+            className={`toggle-btn ${isSearchChoice ? "active" : ""}`}
+            onClick={() => setIsSearchChoice(true)}
           >
             💬 Comments
           </button>
           <div
             className="toggle-slider"
-            style={{ transform: `translateX(${searchState ? "100%" : "0%"})` }}
+            style={{ transform: `translateX(${isSearchChoice ? "100%" : "0%"})` }}
           />
         </div>
       </div>
