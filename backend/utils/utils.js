@@ -1,18 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export async function fetchCommentAndSort(commentIdArray) {
+export async function fetchComment(commentIdArray) {
   // for each instance of the converted object to array we get partial details of the comment by querying the DB.
   // each result is then used to populate our new array and order is maintained.
 
   const finalResult = []; 
   for (let i = 0; i < commentIdArray.length; i++) {
-    const comment = commentIdArray[i];
-    const frequency = comment[1]; // Get the frequency count
+    const commentId = commentIdArray[i];
+    const frequency = commentId[1]; // Get the frequency count
 
     const results = await prisma.comment.findUnique({
       where: {
-        id: comment[0],
+        id: commentId[0],
       },
       select: {
         id: true,
@@ -24,7 +24,11 @@ export async function fetchCommentAndSort(commentIdArray) {
     // Add the frequency count to the result
     finalResult.push({ ...results, frequency });
   }
-  return finalResult.sort((a, b) => {
+  return sortDatabaseResult(finalResult)
+}
+
+export function sortDatabaseResult(array){
+    return array.sort((a, b) => {
     if (b.frequency !== a.frequency) {
       return b.frequency - a.frequency;
     }

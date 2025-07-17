@@ -9,7 +9,7 @@ import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
 import { removePunctuation } from "./clean-string/cleanString.js";
-import { fetchCommentAndSort, getUniqueCommentIDs, createCommentIDsFrequency } from "./utils/utils.js";
+import { fetchComment, getUniqueCommentIDs, createCommentIDsFrequency } from "./utils/utils.js";
 
 dotenv.config();
 const app = express();
@@ -386,7 +386,7 @@ app.get("/search", async (req, res) => {
     // convert object to array to maintain order after sorting
     const commentIdArray = Object.entries(commentIdMap);
     commentIdArray.sort((a, b) => b[1] - a[1]);
-    const result = await fetchCommentAndSort(commentIdArray);
+    const result = await fetchComment(commentIdArray);
 
     res.status(HttpStatus.OK).json(result);
   } catch (error) {
