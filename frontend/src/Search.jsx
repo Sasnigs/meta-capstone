@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./Search.css";
-import { getMoviesByTitle } from "../utils/omdbUtils.js";
-import { BASE_URL } from "./data/data.js";
+import { getMoviesByTitle, getCommentSearch } from "../utils/omdbUtils.js";
 
 export default function Search({
   setMoviesToShow,
@@ -17,9 +16,8 @@ export default function Search({
         const movies = await getMoviesByTitle(searchValue);
         setMoviesToShow(movies);
       } else {
-        const res = await fetch(`${BASE_URL}/search?phrase=${searchValue}`);
-        const data = await res.json();
-        setCommentsToShow(data);
+        const commentSearchResult = await getCommentSearch(searchValue);
+        setCommentsToShow(commentSearchResult);
       }
       setSearchValue("");
     } catch (error) {
@@ -36,7 +34,9 @@ export default function Search({
           name="query"
           onChange={(e) => setSearchValue(e.target.value)}
           required
-          placeholder={isSearchingComment ? "Search comments 💬" : "Search movies 🎬"}
+          placeholder={
+            isSearchingComment ? "Search comments 💬" : "Search movies 🎬"
+          }
         />
         <button type="submit">Search</button>
       </form>
@@ -56,7 +56,9 @@ export default function Search({
           </button>
           <div
             className="toggle-slider"
-            style={{ transform: `translateX(${isSearchingComment ? "100%" : "0%"})` }}
+            style={{
+              transform: `translateX(${isSearchingComment ? "100%" : "0%"})`,
+            }}
           />
         </div>
       </div>
