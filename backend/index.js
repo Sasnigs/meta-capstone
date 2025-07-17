@@ -9,9 +9,7 @@ import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
 import { removePunctuation } from "./clean-string/cleanString.js";
-import { fetchCommentAndSort } from "./search-function/cleanSort.js";
-import uniqueId from "./search-function/uniqueId.js";
-import frequencyId from "./search-function/frequencyId.js";
+import { fetchCommentAndSort, getUniqueCommentIDs, createCommentIDsFrequency } from "./utils/utils.js";
 
 dotenv.config();
 const app = express();
@@ -365,7 +363,6 @@ app.post("/comment", isAuthenticated, async (req, res) => {
   }
 });
 
-// TODO: optimise solution for better performance
 app.get("/search", async (req, res) => {
   try {
     const { phrase } = req.query;
@@ -380,18 +377,16 @@ app.get("/search", async (req, res) => {
     }
 
     // Collect matching commentId
-    const commentIdSet = uniqueId(words, wordMap)
+    const commentIdSet = getUniqueCommentIDs(words, wordMap);
 
-    // object to store commentId occurence in the array of commentId 
-    const setMap = frequencyId(words, wordMap, commentIdSet);
-   
+    // object to store commentId occurence in the array of commentId
+    const commentIdMap = createCommentIDsFrequency(words, wordMap, commentIdSet);
+
     // convert object to array to maintain order after sorting
-    const entrieSetMap = Object.entries(setMap);
-    entrieSetMap.sort((a, b) => b[1] - a[1]);
-    const finalResult = []; 
-    
-   const result = await fetchCommentAndSort(finalResult, entrieSetMap)
-   
+    const commentIdArray = Object.entries(commentIdMap);
+    commentIdArray.sort((a, b) => b[1] - a[1]);
+    const result = await fetchCommentAndSort(commentIdArray);
+
     res.status(HttpStatus.OK).json(result);
   } catch (error) {
     res
