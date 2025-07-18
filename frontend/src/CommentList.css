@@ -1,0 +1,23 @@
+.comment-div {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.link-no-styles {
+  text-decoration: none;
+  color: inherit;
+}
+.result-count {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  font-weight: 500;
+  color: #cccccc;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #999999;
+  margin-top: 40px;
+}
