@@ -164,6 +164,18 @@ app.post("/login", async (req, res) => {
       .json({ message: "Sign in failed" });
   }
 });
+
+//logout users
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: "Logout failed" });
+    }
+    res.clearCookie("connect.sid");
+    res.status(HttpStatus.OK).json({ message: "Logged out successfully" });
+  });
+});
+
 function isAuthenticated(req, res, next) {
   if (req.session.userId) {
     next();
