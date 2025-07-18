@@ -4,8 +4,9 @@ import Comments from "./Comments";
 import "./MovieForum.css";
 import { getMovieById } from "../utils/omdbUtils";
 import { useSearchParams } from "react-router-dom";
+import Logout from "./Logout";
 
-export default function MovieForum() {
+export default function MovieForum({setUser}) {
   const { id } = useParams();
   const [movie, setMovie] = useState("");
   const [searchParams] = useSearchParams();
@@ -24,23 +25,26 @@ export default function MovieForum() {
   }, [id]);
 
   return (
-    <div className="movie-cont">
-      <div className="movie-details">
-        <img src={movie.Poster} alt={`${movie.Title}-image`} />
-        <div className="movie-info">
-          <h1>{movie.Title}</h1>
-          <p>
-            <b>Plot:</b> {movie.Plot}
-          </p>
-          <p>
-            <b>Released:</b> {movie.Released}
-            <span>
-              <b>Runtime:</b> {movie.Runtime}
-            </span>
-          </p>
+    <div>
+      <Logout setUser={setUser} />
+      <div className="movie-cont">
+        <div className="movie-details">
+          <img src={movie.Poster} alt={`${movie.Title}-image`} />
+          <div className="movie-info">
+            <h1>{movie.Title}</h1>
+            <p>
+              <b>Plot:</b> {movie.Plot}
+            </p>
+            <p>
+              <b>Released:</b> {movie.Released}
+              <span>
+                <b>Runtime:</b> {movie.Runtime}
+              </span>
+            </p>
+          </div>
         </div>
+        <Comments id={id} highlightCommentId={highlightCommentId} />
       </div>
-      <Comments id={id} highlightCommentId={highlightCommentId} />
     </div>
   );
 }
