@@ -63,3 +63,7 @@
 .up-down-vote p{
   display: flex;
 }
+.highlighted-comment {
+  background-color: #fef3c7; 
+  border: 2px solid #facc15;
+}

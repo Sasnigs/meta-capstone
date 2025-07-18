@@ -1,12 +1,15 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Comments from "./Comments"
+import Comments from "./Comments";
 import "./MovieForum.css";
 import { getMovieById } from "../utils/omdbUtils";
+import { useSearchParams } from "react-router-dom";
 
 export default function MovieForum() {
   const { id } = useParams();
   const [movie, setMovie] = useState("");
+  const [searchParams] = useSearchParams();
+  const highlightCommentId = searchParams.get("highlight");
 
   async function fetchMovie() {
     try {
@@ -37,7 +40,7 @@ export default function MovieForum() {
           </p>
         </div>
       </div>
-        <Comments id={id} />
+      <Comments id={id} highlightCommentId={highlightCommentId} />
     </div>
   );
 }

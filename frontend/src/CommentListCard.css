@@ -1,0 +1,35 @@
+.comment-card {
+  background: #1f1f2e;
+  color: #f1f1f1;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.comment-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.comment-card .comment-message {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.comment-card .movie-title {
+  font-size: 0.9rem;
+  color: #cccccc;
+  margin-bottom: 8px;
+}
+
+.comment-match {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #aaaaaa;
+  font-style: italic;
+}

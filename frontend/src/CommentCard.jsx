@@ -1,12 +1,21 @@
 import "./Commentcard.css";
+import { useEffect, useRef } from "react";
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 
-export default function CommentCard({ commentInfo, upVotes, downVotes }) {
+export default function CommentCard({ commentInfo, upVotes, downVotes, isHighlighted }) {
   const isUpVote = commentInfo.userVote === true;
   const isDownVote = commentInfo.userVote === false;
+  const commentRef = useRef(null);
+
+  useEffect(() => {
+    if (isHighlighted && commentRef.current) {
+      commentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, []);
+
   return (
-    <div>
-      <div className="comment-cont">
+    <div ref={commentRef}>
+      <div className={`comment-cont ${isHighlighted ? "highlighted-comment" : ""}`}>
         <div className="user-area">
           <div className="tooltip-wrapper">
             <span className="username">@{commentInfo.user.username}</span>
@@ -16,13 +25,10 @@ export default function CommentCard({ commentInfo, upVotes, downVotes }) {
               </p>
               <p>
                 <strong>Joined: </strong>
-                {new Date(commentInfo.user.createdAt).toLocaleDateString(
-                  "en-US",
-                  {
-                    year: "numeric",
-                    month: "long",
-                  }
-                )}
+                {new Date(commentInfo.user.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                })}
               </p>
             </div>
           </div>

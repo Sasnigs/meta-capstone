@@ -3,17 +3,21 @@ import CommentCard from "./CommentCard";
 import { BASE_URL } from "./data/data";
 import SortBar from "./SortBar";
 import "./Comments.css";
-export default function Comments({ id }) {
+
+export default function Comments({ id, highlightCommentId }) {
   const [message, setMessage] = useState("");
   const [allComments, setAllComments] = useState([]);
-  const [sortVal, setSortVal] = useState(null)
+  const [sortVal, setSortVal] = useState(null);
   let movieId = id;
   async function getComments() {
     try {
-      const res = await fetch(`${BASE_URL}/comments/${movieId}?sortType=${sortVal}`, {
-        method: "GET",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${BASE_URL}/comments/${movieId}?sortType=${sortVal}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
       if (res.ok) {
         const data = await res.json();
         setAllComments(data);
@@ -99,14 +103,18 @@ export default function Comments({ id }) {
       <SortBar setSortVal={setSortVal} />
       <div className="comments-box">
         {allComments.length !== 0 ? (
-          allComments.map((commentInfo) => (
-            <CommentCard
-              commentInfo={commentInfo}
-              key={commentInfo.id}
-              upVotes={upVotes}
-              downVotes={downVotes}
-            />
-          ))
+          allComments.map((commentInfo) => {
+            const isHighlighted = commentInfo.id === highlightCommentId;
+            return (
+              <CommentCard
+                commentInfo={commentInfo}
+                key={commentInfo.id}
+                upVotes={upVotes}
+                downVotes={downVotes}
+                isHighlighted={isHighlighted}
+              />
+            );
+          })
         ) : (
           <p>No comments yet.</p>
         )}
