@@ -9,7 +9,11 @@ import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
 import { removePunctuation } from "./clean-string/cleanString.js";
-import { fetchComment, getUniqueCommentIDs, createCommentIDsFrequency } from "./utils/utils.js";
+import {
+  fetchComment,
+  getUniqueCommentIDs,
+  createCommentIDsFrequency,
+} from "./utils/utils.js";
 
 dotenv.config();
 const app = express();
@@ -313,8 +317,6 @@ app.patch(
 app.post("/comment", isAuthenticated, async (req, res) => {
   const { message, movieId } = req.body;
   try {
-    console.log("req.session.userId:", req.session.userId);
-    console.log("comment body:", req.body);
     const newComment = await prisma.comment.create({
       data: {
         message,
@@ -359,11 +361,9 @@ app.post("/comment", isAuthenticated, async (req, res) => {
     }
     res.status(HttpStatus.OK).json(newComment);
   } catch (error) {
-    console.error("Error creating comment:", error.message);
-    console.error("Stack trace:", error.stack);
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Failed to create comment" });
+      .json({ message: "Failed to create comment", stack: error.stack });
   }
 });
 
@@ -383,9 +383,12 @@ app.get("/search", async (req, res) => {
     // Collect matching commentId
     const commentIdSet = getUniqueCommentIDs(words, wordMap);
 
-
     // object to store commentId occurence in the array of commentId
-    const commentIdMap = createCommentIDsFrequency(words, wordMap, commentIdSet);
+    const commentIdMap = createCommentIDsFrequency(
+      words,
+      wordMap,
+      commentIdSet
+    );
 
     // convert object to array to maintain order after sorting
     const commentIdArray = Object.entries(commentIdMap);
