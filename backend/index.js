@@ -313,8 +313,6 @@ app.patch(
 app.post("/comment", isAuthenticated, async (req, res) => {
   const { message, movieId } = req.body;
   try {
-    console.log("req.session.userId:", req.session.userId);
-    console.log("comment body:", req.body);
     const newComment = await prisma.comment.create({
       data: {
         message,
@@ -359,11 +357,9 @@ app.post("/comment", isAuthenticated, async (req, res) => {
     }
     res.status(HttpStatus.OK).json(newComment);
   } catch (error) {
-    console.error("Error creating comment:", error.message);
-    console.error("Stack trace:", error.stack);
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Failed to create comment" });
+      .json({ message: "Failed to create comment", stack: error.stack });
   }
 });
 
