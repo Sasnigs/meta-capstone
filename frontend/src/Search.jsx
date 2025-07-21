@@ -9,7 +9,9 @@ export default function Search({
   setIsSearchingComment,
 }) {
   const [searchValue, setSearchValue] = useState("");
+  const [isLoadingState, isSetLoadingState] = useState(false);
   async function search(e) {
+    isSetLoadingState(true);
     e.preventDefault();
     try {
       if (!isSearchingComment) {
@@ -23,8 +25,14 @@ export default function Search({
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
+    isSetLoadingState(false);
   }
-
+  if (isLoadingState)
+    return (
+      <div className="spinner-wrapper">
+        <div className="spinner"></div>
+      </div>
+    );
   return (
     <div className="search-cont">
       <form className="search-form" onSubmit={(e) => search(e)}>
