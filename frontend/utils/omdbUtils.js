@@ -17,5 +17,7 @@ export async function getMoviesByTitle(movieTitle) {
 export async function getCommentSearch(searchValue) {
   const res = await fetch(`${BASE_URL}/search?phrase=${searchValue}`);
   const data = await res.json();
-  return data
+  return data;
 }
+
+
