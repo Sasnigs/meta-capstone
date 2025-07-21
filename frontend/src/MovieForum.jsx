@@ -6,7 +6,7 @@ import { getMovieById } from "../utils/omdbUtils";
 import { useSearchParams } from "react-router-dom";
 import Logout from "./Logout";
 
-export default function MovieForum({setUser}) {
+export default function MovieForum({ setUser }) {
   const { id } = useParams();
   const [movie, setMovie] = useState("");
   const [searchParams] = useSearchParams();
@@ -29,7 +29,15 @@ export default function MovieForum({setUser}) {
       <Logout setUser={setUser} />
       <div className="movie-cont">
         <div className="movie-details">
-          <img src={movie.Poster} alt={`${movie.Title}-image`} />
+          <img
+            src={movie.Poster}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "https://picsum.photos/200/300?grayscale";
+              console.log(e.target.src);
+            }}
+            alt={`${movie.Title}-image`}
+          />
           <div className="movie-info">
             <h1>{movie.Title}</h1>
             <p>
