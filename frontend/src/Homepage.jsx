@@ -1,5 +1,5 @@
 import Search from "./Search";
-import MovieList from "./Movielist";
+import MovieList from "./MovieList";
 import CommentList from "./CommentList";
 import { useState } from "react";
 import Logout from "./Logout";
