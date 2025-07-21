@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { OMBD_BASE_URL } from "../../frontend/src/data/data.js";
+import { OMBD_BASE_URL } from "../../frontend/src/data/baseUrls.js";
 import dotenv from "dotenv";
 const prisma = new PrismaClient();
 const API_KEY = process.env.VITE_OMBD_API_KEY;
