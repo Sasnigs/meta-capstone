@@ -9,7 +9,12 @@ import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
 import { removePunctuation } from "./clean-string/cleanString.js";
-import { fetchComment, getUniqueCommentIDs, createCommentIDsFrequency } from "./utils/utils.js";
+import { stopWords } from "./stop-words/stopWords.js";
+import {
+  fetchComment,
+  getUniqueCommentIDs,
+  createCommentIDsFrequency,
+} from "./utils/utils.js";
 
 dotenv.config();
 const app = express();
@@ -169,7 +174,9 @@ app.post("/login", async (req, res) => {
 app.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: "Logout failed" });
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: "Logout failed" });
     }
     res.clearCookie("connect.sid");
     res.status(HttpStatus.OK).json({ message: "Logged out successfully" });
@@ -335,7 +342,10 @@ app.post("/comment", isAuthenticated, async (req, res) => {
 
     // case-insensitive, split, remove punctuation and  empty strings and
     const cleanedWord = removePunctuation(message);
-    const words = cleanedWord.toLowerCase().split(" ").filter(Boolean);
+    const words = cleanedWord
+      .toLowerCase()
+      .split(" ")
+      .filter((word) => word && !stopWords.has(word));
 
     // get unique words
     const uniqueWords = new Set(words);
@@ -381,19 +391,20 @@ app.get("/search", async (req, res) => {
     // case-insensitive, split, remove punctuation and  empty strings
     const cleanedPhrase = removePunctuation(phrase);
     const words = cleanedPhrase.toLowerCase().split(" ").filter(Boolean);
-
     if (words.length === 0) {
       return res
         .status(HttpStatus.BAD_REQUEST)
         .json({ message: "No valid words found in phrase." });
     }
-
     // Collect matching commentId
     const commentIdSet = getUniqueCommentIDs(words, wordMap);
 
-
     // object to store commentId occurence in the array of commentId
-    const commentIdMap = createCommentIDsFrequency(words, wordMap, commentIdSet);
+    const commentIdMap = createCommentIDsFrequency(
+      words,
+      wordMap,
+      commentIdSet
+    );
 
     // convert object to array to maintain order after sorting
     const commentIdArray = Object.entries(commentIdMap);
