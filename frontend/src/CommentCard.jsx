@@ -1,4 +1,4 @@
-import "./Commentcard.css";
+import "./CommentCard.css";
 import { useEffect, useRef } from "react";
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 
