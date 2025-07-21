@@ -9,7 +9,7 @@ import MovieForum from "./MovieForum";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [checkingSession, setCheckingSession] = useState(true)
+  const [checkingSession, setCheckingSession] = useState(true);
 
   async function checkSession() {
     try {
@@ -28,7 +28,6 @@ function App() {
   useEffect(() => {
     checkSession();
   }, []);
- 
 
   function navigate(url) {
     window.location.href = url;
@@ -42,8 +41,12 @@ function App() {
       console.log("Error fetching data", error);
     }
   }
-  // TODO: STYLE LOADING SCREEN TO MEET PJ REQ.
-  if (checkingSession) return <div>Loading...</div>;
+  if (checkingSession)
+    return (
+      <div className="spinner-wrapper">
+        <div className="spinner"></div>
+      </div>
+    );
   return (
     <>
       <Routes>
@@ -69,12 +72,18 @@ function App() {
         />
         <Route
           path="/homepage"
-          element={user ? <Homepage setUser={setUser} /> : <Navigate to="/" replace />}
+          element={
+            user ? <Homepage setUser={setUser} /> : <Navigate to="/" replace />
+          }
         />
         <Route
           path="/movie/:id"
           element={
-            user ? <MovieForum user={user} setUser={setUser} /> : <Navigate to="/" replace />
+            user ? (
+              <MovieForum user={user} setUser={setUser} />
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
       </Routes>
