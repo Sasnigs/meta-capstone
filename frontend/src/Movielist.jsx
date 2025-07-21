@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import "./Movielist.css";
 
 export default function MovieList({ moviesToshow }) {
+  if (!moviesToshow) {
+    return <p className="no-results">Movie not found</p>;
+  }
   return (
     <div className="movie-list-cont">
       <div className="movie-list">
