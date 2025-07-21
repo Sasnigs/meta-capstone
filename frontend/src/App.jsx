@@ -69,12 +69,12 @@ function App() {
         />
         <Route
           path="/homepage"
-          element={user ? <Homepage /> : <Navigate to="/" replace />}
+          element={user ? <Homepage setUser={setUser} /> : <Navigate to="/" replace />}
         />
         <Route
           path="/movie/:id"
           element={
-            user ? <MovieForum user={user} /> : <Navigate to="/" replace />
+            user ? <MovieForum user={user} setUser={setUser} /> : <Navigate to="/" replace />
           }
         />
       </Routes>
