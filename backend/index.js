@@ -379,7 +379,7 @@ app.post("/comment", isAuthenticated, async (req, res) => {
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Failed to create comment" });
+      .json({ message: "Failed to create comment", stack: error.stack });
   }
 });
 
