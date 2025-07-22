@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import CommentCard from "./CommentCard";
+import CommentBoard from "./CommentBoard";
 import { BASE_URL } from "./data/baseUrls";
 import SortBar from "./SortBar";
 import "./Comments.css";
