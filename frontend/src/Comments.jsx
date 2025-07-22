@@ -49,8 +49,9 @@ export default function Comments({ id, highlightCommentId }) {
         const data = await res.json();
         alert(data.message);
       }
-      // TODO
-    } catch (error) {}
+    } catch (error) {
+        console.error("Error fetching data", error);
+    }
   }
   async function upVotes(id) {
     try {
@@ -64,8 +65,9 @@ export default function Comments({ id, highlightCommentId }) {
       if (res.ok) {
         getComments();
       }
-      // TODO
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching data", error);
+    }
   }
   async function downVotes(id) {
     try {
@@ -79,8 +81,9 @@ export default function Comments({ id, highlightCommentId }) {
       if (res.ok) {
         getComments();
       }
-      // TODO
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching data", error);
+    }
   }
 
   return (

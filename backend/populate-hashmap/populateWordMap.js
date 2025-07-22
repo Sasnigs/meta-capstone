@@ -9,6 +9,6 @@ export async function populateWordMap(wordMap) {
       wordMap[entry.word] = [...entry.commentIds];
     }
   } catch (error) {
-   // TODO:
+   console.error("Error populating Hashmap", error);
   }
 }
