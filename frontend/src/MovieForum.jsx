@@ -11,7 +11,6 @@ export default function MovieForum({ setUser }) {
   const [movie, setMovie] = useState("");
   const [searchParams] = useSearchParams();
   const highlightCommentId = searchParams.get("highlight");
-  const placeholderImageUrl = "https://picsum.photos/200/300?grayscale";
 
   async function fetchMovie() {
     try {
@@ -34,7 +33,7 @@ export default function MovieForum({ setUser }) {
             src={movie.Poster}
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = { placeholderImageUrl };
+              e.target.src = "/unavailable.png";
               console.log(e.target.src);
             }}
             alt={`${movie.Title}-image`}
