@@ -2,7 +2,7 @@ import Search from "./Search";
 import MovieList from "./MovieList";
 import CommentList from "./CommentList";
 import { useState } from "react";
-import Logout from "./Logout";
+import NavBar from "./NavBar";
 
 export default function Homepage({setUser}) {
   const [moviesToshow, setMoviesToShow] = useState([]);
@@ -10,7 +10,7 @@ export default function Homepage({setUser}) {
   const [commentsToShow, setCommentsToShow] = useState([]);
   return (
     <div>
-      <Logout setUser={setUser} />
+      <NavBar setUser={setUser} />
       <Search
         setMoviesToShow={setMoviesToShow}
         setCommentsToShow={setCommentsToShow}

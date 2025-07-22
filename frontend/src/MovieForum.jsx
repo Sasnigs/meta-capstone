@@ -4,7 +4,7 @@ import Comments from "./Comments";
 import "./MovieForum.css";
 import { getMovieById } from "../utils/omdbUtils";
 import { useSearchParams } from "react-router-dom";
-import Logout from "./Logout";
+import NavBar from "./NavBar";
 
 export default function MovieForum({ setUser }) {
   const { id } = useParams();
@@ -26,7 +26,7 @@ export default function MovieForum({ setUser }) {
 
   return (
     <div>
-      <Logout setUser={setUser} />
+      <NavBar setUser={setUser} />
       <div className="movie-cont">
         <div className="movie-details">
           <img
