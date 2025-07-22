@@ -9,7 +9,11 @@ import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
 import { removePunctuation } from "./clean-string/cleanString.js";
-import { fetchComment, getUniqueCommentIDs, createCommentIDsFrequency } from "./utils/utils.js";
+import {
+  fetchComment,
+  getUniqueCommentIDs,
+  createCommentIDsFrequency,
+} from "./utils/utils.js";
 
 dotenv.config();
 const app = express();
@@ -371,7 +375,7 @@ app.post("/comment", isAuthenticated, async (req, res) => {
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Failed to create comment" });
+      .json({ message: "Failed to create comment", stack: error.stack });
   }
 });
 
@@ -391,9 +395,12 @@ app.get("/search", async (req, res) => {
     // Collect matching commentId
     const commentIdSet = getUniqueCommentIDs(words, wordMap);
 
-
     // object to store commentId occurence in the array of commentId
-    const commentIdMap = createCommentIDsFrequency(words, wordMap, commentIdSet);
+    const commentIdMap = createCommentIDsFrequency(
+      words,
+      wordMap,
+      commentIdSet
+    );
 
     // convert object to array to maintain order after sorting
     const commentIdArray = Object.entries(commentIdMap);

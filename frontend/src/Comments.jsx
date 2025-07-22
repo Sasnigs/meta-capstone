@@ -106,7 +106,7 @@ export default function Comments({ id, highlightCommentId }) {
           allComments.map((commentInfo) => {
             const isHighlighted = commentInfo.id === highlightCommentId;
             return (
-              <CommentCard
+              <CommentBoard
                 commentInfo={commentInfo}
                 key={commentInfo.id}
                 upVotes={upVotes}

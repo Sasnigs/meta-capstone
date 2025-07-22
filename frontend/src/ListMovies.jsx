@@ -1,8 +1,8 @@
-import MovieCard from "./MovieCard";
+import MovieBoard from "./MovieBoard";
 import { Link } from "react-router-dom";
-import "./Movielist.css";
+import "./ListMovies.css";
 
-export default function MovieList({ moviesToshow }) {
+export default function ListMovies({ moviesToshow }) {
   return (
     <div className="movie-list-cont">
       <div className="movie-list">
@@ -12,7 +12,7 @@ export default function MovieList({ moviesToshow }) {
             key={index}
             className="link-no-style"
           >
-            <MovieCard movie={movie} key={movie.imdbID} />
+            <MovieBoard movie={movie} key={movie.imdbID} />
           </Link>
         ))}
       </div>

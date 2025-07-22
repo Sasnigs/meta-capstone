@@ -20,6 +20,7 @@ export default function Logout({setUser}) {
     }
   }
   return (
+    // TODO: Implement UI for log out
     <div>
       <button onClick={handleLogout}>Logout</button>
     </div>
