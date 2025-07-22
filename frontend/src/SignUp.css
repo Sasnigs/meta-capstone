@@ -1,55 +1,67 @@
 * {
   margin: 0;
   padding: 0;
-}
-*::before,
-*::after {
   box-sizing: border-box;
 }
 
 .signup-cont {
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: Arial, Helvetica, sans-serif;
-  gap: 20px;
+  gap: 30px;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #141414;
+  font-family: "Montserrat", sans-serif;
+}
+
+.signup-cont h1 {
+  font-size: 4rem;
+  color: #4f46e5;
+  letter-spacing: 2px;
+  text-align: center;
+}
+.signup-cont h3 {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #ccc;
+  text-align: center;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sign-up-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-.signup-cont h1 {
-  font-size: 50px;
-  color: #113f67;
-}
-.signup-cont h3 {
-  font-size: 30px;
-}
-.sign-up-form input {
-  padding: 10px 80px;
-}
-.sign-up-form input[type="text"]::placeholder {
-  text-align: center;
-  font-size: larger;
-}
-.sign-up-form input[type="password"]::placeholder {
-  text-align: center;
-  font-size: larger;
-}
-.sign-up-form input[type="email"]::placeholder {
-  text-align: center;
-  font-size: larger;
+  gap: 20px;
 }
 
-.sign-up-form button {
-  padding: 10px;
+.sign-up-form input {
+  padding: 18px 24px;
+  font-size: 1.1rem;
   border-radius: 10px;
-  border: none;
-  background-color: #5585b5;
-  color: white;
+  border: 1px solid #333;
+  background-color: #1f1f1f;
+}
+.sign-up-form button {
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: large;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+.sign-up-form button:hover {
+  background-color: #4338ca;
 }
