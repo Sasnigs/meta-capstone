@@ -1,6 +1,7 @@
 import "./MovieCard.css";
 
 export default function MovieCard({ movie }) {
+  const placeholderImageUrl = "https://picsum.photos/200/300?grayscale"
   return (
     <div className="movie-card">
       <img
@@ -8,7 +9,7 @@ export default function MovieCard({ movie }) {
         alt={`${movie.Title}-image`}
         onError={(e) => {
           e.target.onerror = null;
-          e.target.src = "https://picsum.photos/200/300?grayscale";
+          e.target.src = {placeholderImageUrl};
         }}
       />
       <div>
