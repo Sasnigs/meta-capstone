@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import CommentCard from "./CommentCard";
+import CommentBoard from "./CommentBoard";
 import { BASE_URL } from "./data/data";
 import SortBar from "./SortBar";
 import "./Comments.css";
@@ -106,7 +106,7 @@ export default function Comments({ id, highlightCommentId }) {
           allComments.map((commentInfo) => {
             const isHighlighted = commentInfo.id === highlightCommentId;
             return (
-              <CommentCard
+              <CommentBoard
                 commentInfo={commentInfo}
                 key={commentInfo.id}
                 upVotes={upVotes}

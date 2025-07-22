@@ -1,6 +1,6 @@
-import "./MovieCard.css";
+import "./MovieBoard.css";
 
-export default function MovieCard({ movie }) {
+export default function MovieBoard({ movie }) {
   return (
     <div className="movie-card">
       <img src={movie.Poster} alt={`${movie.Title}-image`} />
