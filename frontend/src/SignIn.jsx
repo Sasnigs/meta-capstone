@@ -37,7 +37,7 @@ export default function SignIn({ checkSession }) {
   }
 
   return (
-    <div className="SignUp-div">
+    <div className="sign-in-div">
       <h1>Show GraM</h1>
       <h3>Sign in</h3>
       <div>
