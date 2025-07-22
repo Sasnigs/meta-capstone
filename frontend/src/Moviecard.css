@@ -8,12 +8,13 @@
  padding: 10px;
  border-radius: 10px;
  background-color: #fff;
- transition: box-shadow 0.3s ease;
+ transition: transform 0.3s ease;
  font-family: Arial, Helvetica, sans-serif;
  font-size: larger;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 .movie-card:hover {
- box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(1.07);
 }
 .movie-card img {
  width: 120px;
