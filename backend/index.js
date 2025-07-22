@@ -9,12 +9,12 @@ import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
 import { removePunctuation } from "./clean-string/cleanString.js";
-import { stopWords } from "./stop-words/stopWords.js";
 import {
   fetchComment,
   getUniqueCommentIDs,
   createCommentIDsFrequency,
 } from "./utils/utils.js";
+import { removeStopwords, eng } from "stopword";
 
 dotenv.config();
 const app = express();
@@ -342,10 +342,8 @@ app.post("/comment", isAuthenticated, async (req, res) => {
 
     // case-insensitive, split, remove punctuation and  empty strings and
     const cleanedWord = removePunctuation(message);
-    const words = cleanedWord
-      .toLowerCase()
-      .split(" ")
-      .filter((word) => word && !stopWords.has(word));
+    let words = cleanedWord.toLowerCase().split(" ").filter(Boolean);
+    words = removeStopwords(words);
 
     // get unique words
     const uniqueWords = new Set(words);
@@ -381,7 +379,7 @@ app.post("/comment", isAuthenticated, async (req, res) => {
   } catch (error) {
     res
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
-      .json({ message: "Failed to create comment" });
+      .json({ message: "Failed to create comment", stack: error.stack });
   }
 });
 

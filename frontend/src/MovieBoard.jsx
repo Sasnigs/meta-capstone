@@ -1,7 +1,7 @@
-import "./MovieCard.css";
+import "./MovieBoard.css";
 
-export default function MovieCard({ movie }) {
-  const placeholderImageUrl = "https://picsum.photos/200/300?grayscale"
+export default function MovieBoard({ movie }) {
+    const placeholderImageUrl = "https://picsum.photos/200/300?grayscale"
   return (
     <div className="movie-card">
       <img
