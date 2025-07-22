@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BASE_URL } from "./data/data";
+import { BASE_URL } from "./data/baseUrls";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import CommentBoard from "./CommentBoard";
-import { BASE_URL } from "./data/data";
+import CommentCard from "./CommentCard";
+import { BASE_URL } from "./data/baseUrls";
 import SortBar from "./SortBar";
 import "./Comments.css";
 

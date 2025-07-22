@@ -1,5 +1,5 @@
-import { OMBD_BASE_URL } from "../src/data/data";
-import { BASE_URL } from "../src/data/data";
+import { OMBD_BASE_URL } from "../src/data/baseUrls";
+import { BASE_URL } from "../src/data/baseUrls";
 const API_KEY = import.meta.env.VITE_OMBD_API_KEY;
 
 export async function getMovieById(movieId) {

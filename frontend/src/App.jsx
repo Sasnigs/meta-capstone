@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { BASE_URL } from "./data/data";
+import { BASE_URL } from "./data/baseUrls";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Homepage from "./Homepage";
