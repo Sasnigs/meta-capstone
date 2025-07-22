@@ -1,6 +1,6 @@
 import MovieCard from "./MovieCard";
 import { Link } from "react-router-dom";
-import "./Movielist.css";
+import "./MovieList.css";
 
 export default function MovieList({ moviesToshow }) {
   return (
