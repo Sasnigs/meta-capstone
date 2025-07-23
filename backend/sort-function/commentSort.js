@@ -28,7 +28,7 @@ class MostRecent extends CommentSorter {
 class OldestUser extends CommentSorter {
   sort(comments) {
     return comments.sort(
-      (a, b) => new Date(b.user.createdAt) - new Date(a.user.createdAt)
+      (a, b) => new Date(a.user.createdAt) - new Date(b.user.createdAt)
     );
   }
 }
