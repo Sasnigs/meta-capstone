@@ -17,7 +17,7 @@ export default function SortBar({ setSortVal }) {
     NET_USEFUL: "net_useful",
   };
 
-  const [selectedSort, setSelectedSort] = useState(null);
+  const [selectedSort, setSelectedSort] = useState(SORT_TYPE.MOST_RECENT);
   const changeSort = (sortType) => {
     setSortVal(sortType);
     setSelectedSort(sortType);

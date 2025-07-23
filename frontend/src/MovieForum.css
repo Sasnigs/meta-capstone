@@ -1,8 +1,10 @@
 .movie-cont {
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 20px;
+  padding: 40px 20px;
   max-width: 1200px;
   margin: auto;
+  background-color: #141414;
+  color: #f5f5f5;
+  font-family: "Montserrat", sans-serif;
 }
 
 .movie-details {
@@ -11,17 +13,17 @@
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px;
   width: 100%;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgb(225, 211, 211);
+  padding-bottom: 30px;
+  border-bottom: 2px solid #4f46e5;
 }
 
 .movie-details img {
   max-width: 300px;
   width: 100%;
   height: auto;
-  border-radius: 10px;
+  border-radius: 12px;
   object-fit: cover;
 }
 
@@ -32,13 +34,20 @@
 }
 
 .movie-info h1 {
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+  font-size: 2.5rem;
+  color: #4f46e5;
+  letter-spacing: 1px;
 }
 
 .movie-info p {
-  font-size: 1rem;
-  margin-bottom: 10px;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
   line-height: 1.6;
+  color: #ddd;
+}
+.movie-info b {
+  color: #ffffff;
 }
 @media screen and (max-width: 768px) {
   .movie-details {
