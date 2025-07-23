@@ -1,5 +1,5 @@
 import './CommentListCard.css'
-import convertDate from '../utils/omdbUtils';
+import convertDate from '../utils/convertDate';
 export default function CommentListCard({ commentResult }) {
   const time = convertDate(commentResult.createdAt)
   return (

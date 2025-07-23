@@ -1,58 +1,90 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-*::before,
-*::after {
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
-
 .sign-in-div {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: Arial, Helvetica, sans-serif;
-  gap: 20px;
+  gap: 30px;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #141414;
+  font-family: "Montserrat", sans-serif;
+}
+
+.sign-in-div h1 {
+  font-size: 4rem;
+  color: #4f46e5;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.sign-in-div h3 {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #ccc;
+  text-align: center;
 }
 .sign-in-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-
-}
-.sign-in-div h1{
-    font-size: 50px;
-    color:#113f67 ;
-}
-.sign-in-div h3{
-    font-size: 30px;
+  gap: 20px;
 }
 .sign-in-form input {
-  padding: 10px 80px;
-}
-.sign-in-form input[type="text"]::placeholder {
+  padding: 18px 24px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: 1px solid #333;
+  background-color: #1f1f1f;
+  color: #fff;
+  outline: none;
+  width: 320px;
   text-align: center;
-  font-size: larger;
 }
-.sign-in-form input[type="password"]::placeholder {
-  text-align: center;
-  font-size: larger;
+
+.sign-in-form input::placeholder {
+  color: #aaa;
 }
 
 .sign-in-form button {
-  padding: 10px;
+  padding: 16px;
   border-radius: 10px;
-  border: none;
-  background-color: #5585b5;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #4f46e5;
   color: white;
-  cursor: pointer;
-  font-size: large;
-}
-.sign-up {
   border: none;
-  background-color: white;
-  color: black;
-  cursor: pointer;
-  font-size: large;
+  transition: background-color 0.3s ease;
+}
+
+.sign-in-form button:hover {
+  background-color: #4338ca;
+}
+
+.sign-up {
+  margin-top: 15px;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: transparent;
+  color: #4f46e5;
+  border: 2px solid #4f46e5;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sign-up:hover {
+  background-color: #4f46e5;
+  color: white;
+}
+.form-wrapper {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

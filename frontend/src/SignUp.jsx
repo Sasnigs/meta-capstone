@@ -3,7 +3,7 @@ import { BASE_URL } from "./data/baseUrls";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
-export default function SignUp({checkSession}) {
+export default function SignUp({ checkSession }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ export default function SignUp({checkSession}) {
       });
       if (res.ok) {
         const data = await res.json();
-        await checkSession()
+        await checkSession();
         navigate("/homepage", { replace: true });
       } else {
         const data = await res.json();
@@ -38,9 +38,9 @@ export default function SignUp({checkSession}) {
   }
   return (
     <div className="signup-cont">
-      <h1>Show GraM</h1>
-      <h3>Sign Up</h3>
-      <div>
+      <h1>ReelTalk</h1>
+      <h3>Create your account</h3>
+      <div className="form-wrapper">
         <form className="sign-up-form" onSubmit={(e) => handleSubmit(e)}>
           <input
             type="text"

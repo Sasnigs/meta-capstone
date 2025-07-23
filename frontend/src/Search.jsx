@@ -9,9 +9,9 @@ export default function Search({
   setIsSearchingComment,
 }) {
   const [searchValue, setSearchValue] = useState("");
-  const [isLoadingState, isSetLoadingState] = useState(false);
+  const [isLoadingState, setIsLoadingState] = useState(false);
   async function search(e) {
-    isSetLoadingState(true);
+    setIsLoadingState(true);
     e.preventDefault();
     try {
       if (!isSearchingComment) {
@@ -25,7 +25,7 @@ export default function Search({
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
-    isSetLoadingState(false);
+    setIsLoadingState(false);
   }
   if (isLoadingState)
     return (
@@ -35,6 +35,12 @@ export default function Search({
     );
   return (
     <div className="search-cont">
+      <div className="search-header">
+        <h1 className="search-title">Welcome to ReelTalk</h1>
+        <p className="search-subtitle">
+          Find movies. Read opinions. Join the discussion.
+        </p>
+      </div>
       <form className="search-form" onSubmit={(e) => search(e)}>
         <input
           value={searchValue}

@@ -48,6 +48,6 @@ model Vote {
 }
 
 model Word {
-  word       String   @unique
+  word       String   @id
   commentIds String[] 
 }

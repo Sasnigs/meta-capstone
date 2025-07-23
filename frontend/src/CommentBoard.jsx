@@ -1,8 +1,8 @@
-import "./CommentCard.css";
+import "./CommentBoard.css";
 import { useEffect, useRef } from "react";
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 
-export default function CommentCard({ commentInfo, upVotes, downVotes, isHighlighted }) {
+export default function CommentBoard({ commentInfo, upVotes, downVotes, isHighlighted }) {
   const isUpVote = commentInfo.userVote === true;
   const isDownVote = commentInfo.userVote === false;
   const commentRef = useRef(null);
