@@ -9,9 +9,9 @@ export default function Search({
   setIsSearchingComment,
 }) {
   const [searchValue, setSearchValue] = useState("");
-  const [isLoadingState, isSetLoadingState] = useState(false);
+  const [isLoadingState, setIsLoadingState] = useState(false);
   async function search(e) {
-    isSetLoadingState(true);
+    setIsLoadingState(true);
     e.preventDefault();
     try {
       if (!isSearchingComment) {
@@ -25,7 +25,7 @@ export default function Search({
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
-    isSetLoadingState(false);
+    setIsLoadingState(false);
   }
   if (isLoadingState)
     return (

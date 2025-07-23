@@ -1,5 +1,5 @@
 import Search from "./Search";
-import MovieList from "./MovieList";
+import ListMovies from "./ListMovies";
 import CommentList from "./CommentList";
 import { useState } from "react";
 import NavBar from "./NavBar";
@@ -20,7 +20,7 @@ export default function Homepage({setUser}) {
       {isSearchingComment ? (
         <CommentList commentsToShow={commentsToShow} />
       ) : (
-        <MovieList moviesToshow={moviesToshow} />
+        <ListMovies moviesToshow={moviesToshow} />
       )}
     </div>
   );
