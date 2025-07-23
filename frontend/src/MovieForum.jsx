@@ -44,9 +44,9 @@ export default function MovieForum({ setUser }) {
             </p>
             <p>
               <b>Released:</b> {movie.Released}
-              <span>
-                <b>Runtime:</b> {movie.Runtime}
-              </span>
+            </p>
+            <p>
+              <b>Runtime:</b> {movie.Runtime}
             </p>
           </div>
         </div>
