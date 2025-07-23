@@ -1,6 +1,6 @@
-import "./MovieCard.css";
+import "./MovieBoard.css";
 
-export default function MovieCard({ movie }) {
+export default function MovieBoard({ movie }) {
   return (
     <div className="movie-card">
       <img
@@ -8,7 +8,7 @@ export default function MovieCard({ movie }) {
         alt={`${movie.Title}-image`}
         onError={(e) => {
           e.target.onerror = null;
-          e.target.src = "https://picsum.photos/200/300?grayscale";
+          e.target.src = "/unavailable.png";
         }}
       />
       <div>

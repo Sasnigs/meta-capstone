@@ -33,7 +33,7 @@ export default function MovieForum({ setUser }) {
             src={movie.Poster}
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = "https://picsum.photos/200/300?grayscale";
+              e.target.src = "/unavailable.png";
             }}
             alt={`${movie.Title}-image`}
           />
