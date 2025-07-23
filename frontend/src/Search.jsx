@@ -35,6 +35,12 @@ export default function Search({
     );
   return (
     <div className="search-cont">
+      <div className="search-header">
+        <h1 className="search-title">Welcome to ReelTalk</h1>
+        <p className="search-subtitle">
+          Find movies. Read opinions. Join the discussion.
+        </p>
+      </div>
       <form className="search-form" onSubmit={(e) => search(e)}>
         <input
           value={searchValue}
