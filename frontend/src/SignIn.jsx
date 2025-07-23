@@ -38,28 +38,27 @@ export default function SignIn({ checkSession }) {
 
   return (
     <div className="sign-in-div">
-      <h1>Show GraM</h1>
-      <h3>Sign in</h3>
-      <div>
-        <form className="sign-in-form" onSubmit={(e) => handleSubmit(e)}>
-          <input
-            type="text"
-            value={username}
-            placeholder="Username"
-            required
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            type="password"
-            value={password}
-            placeholder="password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">Sign In</button>
-        </form>
-      </div>
-
+      <h1>ReelTalk</h1>
+      <h3>Sign in to join the discussion</h3>
+        <div className="form-wrapper">
+          <form className="sign-in-form" onSubmit={(e) => handleSubmit(e)}>
+            <input
+              type="text"
+              value={username}
+              placeholder="Username"
+              required
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="password"
+              value={password}
+              placeholder="password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button type="submit">Sign In</button>
+          </form>
+        </div>
       <Link to={"signUp"}>
         <button className="sign-up">Sign up</button>
       </Link>
