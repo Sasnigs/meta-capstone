@@ -34,7 +34,6 @@ export default function MovieForum({ setUser }) {
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "/unavailable.png";
-              console.log(e.target.src);
             }}
             alt={`${movie.Title}-image`}
           />
