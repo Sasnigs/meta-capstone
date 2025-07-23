@@ -34,7 +34,6 @@ export default function MovieForum({ setUser }) {
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "https://picsum.photos/200/300?grayscale";
-              console.log(e.target.src);
             }}
             alt={`${movie.Title}-image`}
           />
