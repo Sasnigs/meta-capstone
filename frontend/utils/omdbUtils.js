@@ -14,7 +14,7 @@ export async function getMoviesByTitle(movieTitle) {
     `${OMBD_BASE_URL}?apikey=${API_KEY}&s=${trimmedMovieTitle}`
   );
   const data = await res.json();
-  return data.Search;
+   return data.Search || [];
 }
 
 export async function getCommentSearch(searchValue) {
