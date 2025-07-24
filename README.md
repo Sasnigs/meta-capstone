@@ -5,9 +5,13 @@
 ## Overview
 
 **Category:** Discussion Forum
-**Story:** MovieTalk is a platform for users to discuss movies they’ve watched or plan to watch. Users can search for movies, read what others think, or leave their own thoughts through comments.
+
+**Story:** ReelTalk is a platform for users to discuss movies they’ve watched or plan to watch. Users can search for movies, read what others think, or leave their own thoughts through comments.
+
 **Market:** Designed for movie lovers who want to share or explore opinions before watching.
+
 **Habit:** Can be used daily as new movies and comments are added regularly.
+
 **Scope:** Focused on text-only comments for movies available through the OMDb API.
 
 ---
