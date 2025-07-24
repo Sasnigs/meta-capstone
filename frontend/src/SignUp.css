@@ -50,6 +50,8 @@
   border-radius: 10px;
   border: 1px solid #333;
   background-color: #1f1f1f;
+  color: #aaa;
+  text-align: center;
 }
 .sign-up-form button {
   padding: 16px;

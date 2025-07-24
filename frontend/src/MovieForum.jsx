@@ -25,7 +25,7 @@ export default function MovieForum({ setUser }) {
   }, [id]);
 
   return (
-    <div>
+    <div className="forum-page">
       <NavBar setUser={setUser} />
       <div className="movie-cont">
         <div className="movie-details">

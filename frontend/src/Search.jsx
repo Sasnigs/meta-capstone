@@ -45,6 +45,7 @@ export default function Search({
         <input
           value={searchValue}
           type="search"
+          autoComplete="off"
           name="query"
           onChange={(e) => setSearchValue(e.target.value)}
           required
