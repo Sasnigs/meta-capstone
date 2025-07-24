@@ -9,7 +9,8 @@ import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
 import { removePunctuation } from "./clean-string/cleanString.js";
-import validator from "validator";
+import { validateAuthInput } from "./utils/validateAuthInput.js";
+
 import {
   fetchComment,
   getUniqueCommentIDs,
@@ -107,14 +108,12 @@ app.get("/auth/google/callback", async (req, res) => {
 
 app.post("/signup", async (req, res) => {
   const { email, username, password } = req.body;
-  if (!validator.isEmail(email)) {
-    return res.status(HttpStatus.BAD_REQUEST).json({ message: "Invalid email format." });
+  const validationError = validateAuthInput(email, username, password);
+  if (validationError) {
+    return res
+      .status(HttpStatus.BAD_REQUEST)
+      .json({ message: validationError });
   }
-  if (username.includes(" ") || password.includes(" ")) {
-  return res.status(HttpStatus.BAD_REQUEST).json({
-    message: "Username and password must not contain spaces.",
-  });
-}
   try {
     // check if user already exist by checking email & username
     const existingUser = await prisma.user.findFirst({
