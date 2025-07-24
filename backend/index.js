@@ -3,8 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
-import { OAuth2Client } from "google-auth-library";
-import { getUserData } from "./auth-function/getUserData.js";
 import session from "express-session";
 import { sortComment } from "./sort-function/sortComment.js";
 import { populateWordMap } from "./populate-hashmap/populateWordMap.js";
@@ -60,49 +58,6 @@ const HttpStatus = {
   UNAUTHORIZED: 401,
 };
 
-// Google Auth
-app.post("/", async (req, res) => {
-  try {
-    const redirectUrl = `${BASE_URL}/auth/google/callback`;
-    const oAuth2Client = new OAuth2Client(
-      process.env.GOOGLE_CLIENT_ID,
-      process.env.GOOGLE_CLIENT_SECRET,
-      redirectUrl
-    );
-    const authorizeUrl = oAuth2Client.generateAuthUrl({
-      access_type: "offline",
-      scope:
-        "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email openid",
-      promp: "consent",
-    });
-    res.status(HttpStatus.CREATED).json({ url: authorizeUrl });
-  } catch (error) {
-    res
-      .status(HttpStatus.BAD_REQUEST)
-      .json({ message: "Error generating url" });
-  }
-});
-
-app.get("/auth/google/callback", async (req, res) => {
-  const code = req.query.code;
-  try {
-    const redirectUrl = `${BASE_URL}/auth/google/callback`;
-    const oAuth2Client = new OAuth2Client(
-      process.env.GOOGLE_CLIENT_ID,
-      process.env.GOOGLE_CLIENT_SECRET,
-      redirectUrl
-    );
-    const response = await oAuth2Client.getToken(code);
-    await oAuth2Client.setCredentials(response.tokens);
-    const user = oAuth2Client.credentials;
-    const profile = await getUserData(user.access_token);
-    res.status(HttpStatus.OK).json(profile);
-  } catch (error) {
-    res
-      .status(HttpStatus.BAD_REQUEST)
-      .json({ message: "Error fetching user details" });
-  }
-});
 
 // Sign up route using Bcrypt
 
