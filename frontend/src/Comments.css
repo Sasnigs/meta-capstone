@@ -52,3 +52,7 @@
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
+.no-comment{
+  text-align: center;
+  margin-top: 50px;
+}

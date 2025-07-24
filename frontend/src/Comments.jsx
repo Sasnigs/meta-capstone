@@ -119,7 +119,7 @@ export default function Comments({ id, highlightCommentId }) {
             );
           })
         ) : (
-          <p>No comments yet.</p>
+          <p className="no-comment">No comments yet.</p>
         )}
       </div>
     </div>
