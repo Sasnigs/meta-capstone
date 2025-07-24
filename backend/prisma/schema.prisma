@@ -49,5 +49,5 @@ model Vote {
 
 model Word {
   word       String   @id
-  commentIds String[] 
+  commentIds String[]
 }
