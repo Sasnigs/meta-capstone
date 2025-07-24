@@ -108,7 +108,7 @@ app.get("/auth/google/callback", async (req, res) => {
 app.post("/signup", async (req, res) => {
   const { email, username, password } = req.body;
   if (!validator.isEmail(email)) {
-    return res.status(400).json({ message: "Invalid email format." });
+    return res.status(HttpStatus.BAD_REQUEST).json({ message: "Invalid email format." });
   }
   if (username.includes(" ") || password.includes(" ")) {
   return res.status(HttpStatus.BAD_REQUEST).json({
