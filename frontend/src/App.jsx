@@ -29,18 +29,6 @@ function App() {
     checkSession();
   }, []);
 
-  function navigate(url) {
-    window.location.href = url;
-  }
-  async function auth() {
-    try {
-      const res = await fetch(`${BASE_URL}`, { method: "POST" });
-      const data = await res.json();
-      navigate(data.url);
-    } catch (error) {
-      console.log("Error fetching data", error);
-    }
-  }
   if (checkingSession)
     return (
       <div className="spinner-wrapper">
