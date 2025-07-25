@@ -293,13 +293,14 @@ app.patch(
 
 // post a comment
 app.post("/comment", isAuthenticated, async (req, res) => {
-  const { message, movieId } = req.body;
+  const { message, movieId, isSpoiler } = req.body;
   try {
     const newComment = await prisma.comment.create({
       data: {
         message,
         movieId,
         userId: req.session.userId,
+        isSpoiler,
       },
     });
 
